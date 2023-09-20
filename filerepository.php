@@ -47,15 +47,15 @@ function findUserByEmail($email) {
  * @param string $name The name of the user.
  * @param string $pass The password of the user.
  */
-// function saveUser($email, $name, $pass) {
-//     // Specify the path to the .txt file
-//     $userdatafile_path = 'users/users.txt';
+function saveUser($email, $name, $pass) {
+    // Specify the path to the .txt file
+    $userdatafile_path = 'users/users.txt';
 
-//     //open userdata file, append new userdata in newline and close file
-//     $usersfile = fopen($userdatafile_path, 'a') or die("Unable to open file!");
-//     $newUserDatatxt = $email . '|' . $name . '|' . $pass . "\n";
-//     fwrite($usersfile, $newUserDatatxt);
-//     fclose($usersfile);
-// }
+    //open userdata file, append new userdata in newline and close file
+    $usersfile = fopen($userdatafile_path, 'a') or die("Unable to open file!");
+    $newUserDatatxt = $email . '|' . $name . '|' . $pass . "\n";
+    fwrite($usersfile, $newUserDatatxt);
+    fclose($usersfile);
+}
 
 ?>
