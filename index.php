@@ -12,7 +12,7 @@ require('contact.php');
 require('register.php');
 require('login.php');
 require('error.php');
-require('mysqlconnect.php');
+//require('mysqlconnect.php');
 
 /** MAIN APP */
 $page = getRequestedPage();
