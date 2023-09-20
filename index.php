@@ -1,11 +1,10 @@
 <?php
-
 session_start(); 
 
 require('sessionmanager.php');
 require('validations.php');
 require('userservice.php');
-require('filerepository.php');
+//require('filerepository.php');
 
 require('home.php');
 require('about.php');
@@ -13,6 +12,7 @@ require('contact.php');
 require('register.php');
 require('login.php');
 require('error.php');
+require('mysqlconnect.php');
 
 /** MAIN APP */
 $page = getRequestedPage();
@@ -99,7 +99,8 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
-                    saveUser($email, $name, $pass);
+                    require('mysqlconnect.php');
+                    saveUser($conn, $name, $email, $pass);
                     $page = "login";
                 }
                 break;
@@ -109,7 +110,13 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
-                    $result = authenticateUser($email, $pass);
+                    require('mysqlconnect.php');
+                    // if (findUserByEmail($conn, $email)) {
+                    //     echo "User found";
+                    // } else {
+                    //     echo "User not found";
+                    // }
+                    $result = authenticateUser($conn, $email, $pass);
 
                     if ($result['result'] === RESULT_UNKNOWN_USER) {
                         $data['emailunknownErr'] = "E-mailadres is onbekend";

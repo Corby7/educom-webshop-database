@@ -31,8 +31,8 @@ define("RESULT_WRONG_PASSWORD", -2);
  * @param string $pass The user's password.
  * @return array An array containing the authentication result and user information if successful.
  */
-function authenticateUser($email, $pass) {
-    $user = findUserByEmail($email);
+function authenticateUser($conn, $email, $pass) {
+    $user = findUserByEmail($conn, $email);
     
     if(empty($user)) {
         return ['result' => RESULT_UNKNOWN_USER];
