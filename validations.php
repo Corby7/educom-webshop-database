@@ -60,7 +60,9 @@ function initializeFormData($formType) {
                 'pass' => '',
                 'passErr' => '',
                 'wrongpassErr' => '',
-                'valid' => ''
+                'username' => '',
+                'useremail' => '',
+                'valid' => '',
             );
             break;
 
@@ -220,18 +222,23 @@ function validateLoginForm($data) {
     }
 
     if (empty($emailErr) && empty($passErr)) {
-        $result = authenticateUser($email, $pass);
+        try {
+            $result = authenticateUser($email, $pass);
 
-        if ($result['result'] === RESULT_UNKNOWN_USER) {
-            $emailunknownErr = "E-mailadres is onbekend";
-        } elseif ($result['result'] === RESULT_WRONG_PASSWORD) {
-            $wrongpassErr = "Wachtwoord is onjuist";
-        } elseif ($result['result'] === RESULT_OK) {
-            $valid = true;
-            $username = $result['user']['name'];
-            $useremail = $result['user']['email'];
+            if ($result['result'] === RESULT_UNKNOWN_USER) {
+                $emailunknownErr = "E-mailadres is onbekend";
+            } elseif ($result['result'] === RESULT_WRONG_PASSWORD) {
+                $wrongpassErr = "Wachtwoord is onjuist";
+            } elseif ($result['result'] === RESULT_OK) {
+                $valid = true;
+                $username = $result['user']['name'];
+                $useremail = $result['user']['email'];
+            }
+        } catch (Exception $e) {
+            logError("Login failed: " . $e->getMessage());
+            
         }
-    };
+    }
 
     return compact ('email', 'pass', 'emailErr', 'passErr', 'emailunknownErr', 'wrongpassErr', 'valid', 'username', 'useremail');
 }
