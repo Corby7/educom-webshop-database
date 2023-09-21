@@ -14,6 +14,10 @@ require('login.php');
 require('settings.php');
 require('error.php');
 
+function logError($message) {
+    echo "LOG TO FILE: " . $message;
+}
+
 /** MAIN APP */
 $page = getRequestedPage();
 $data = processRequest($page);
@@ -123,6 +127,7 @@ function processRequest($page) {
                 }
                 break;
         }
+
         $data['page'] = $page;
         return $data;
 
