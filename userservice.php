@@ -68,4 +68,12 @@ function storeUser($email, $name, $pass) {
     //room for future password encryption
     saveUser($email, $name, $pass);
 }
+
+function updatePasswordByEmail($email, $newpass, $data) {
+    if (overwritePassword($email, $newpass)) {
+        $data['passwordUpdated'] = "Wachtwoord succesvol gewijzigd.";
+    }
+    return $data;
+}
+
 ?>

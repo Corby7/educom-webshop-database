@@ -22,6 +22,28 @@ $dbname = "corbijns_webshop";
     
 }
 
+function overwritePassword($email, $newpass) {
+    $conn = connectDatabase();
+
+    // Prepare and bind
+    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE email = ?");
+    $stmt->bind_param("ss", $newpass, $email);
+
+    // Execute the statement
+    if ($stmt->execute()) {
+        // Password updated successfully
+        return true;
+    } else {
+        // Error occurred while updating the password
+        echo "error";
+        return false;
+    }
+
+    // Close the statement and database connection
+    $stmt->close();
+    $conn->close();
+}
+
 function saveUser($name, $email, $pass) {
     $conn = connectDatabase();
 

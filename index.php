@@ -106,6 +106,11 @@ function processRequest($page) {
 
             case 'settings':
                 $data = validateSettingsForm($data);
+                if ($data['valid']) {
+                    extract($data);
+
+                    $data = updatePasswordByEmail($email, $newpass, $data);
+                }
                 break;
 
             case 'login':
@@ -113,7 +118,7 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
-                    loginUser($username);
+                    loginUser($username, $useremail);
                     $page = "home";
                 }
                 break;
