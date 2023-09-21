@@ -1,10 +1,10 @@
 <?php
 
 function connectDatabase() {
-$servername = "localhost";
-$username = "WebShopUser";
-$password = "1234";
-$dbname = "corbijns_webshop";
+    $servername = "localhost";
+    $username = "WebShopUser";
+    $password = "1234";
+    $dbname = "corbijns_webshop";
 
     try {
         // Create connection
@@ -25,86 +25,59 @@ $dbname = "corbijns_webshop";
 function overwritePassword($email, $newpass) {
     $conn = connectDatabase();
 
-    // Prepare and bind
-    $stmt = $conn->prepare("UPDATE users SET password = ? WHERE email = ?");
-    $stmt->bind_param("ss", $newpass, $email);
+    try {
+        $sql = "UPDATE users SET password = '$newpass' WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Password updated successfully
+        if ($result === false) {
+            throw new Exception("Updating password failed" . $sql . "error: " . mysqli_error($conn));
+        }
+
         return true;
-    } else {
-        // Error occurred while updating the password
-        echo "error";
-        return false;
+    } finally {
+        mysqli_close($conn);
     }
-
-    // Close the statement and database connection
-    $stmt->close();
-    $conn->close();
 }
 
 function saveUser($name, $email, $pass) {
     $conn = connectDatabase();
 
     try {
-        // Prepare and bind
-        $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $name, $email, $pass);
+        $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$pass')";
+        $result = mysqli_query($conn, $sql);
 
-        if (!$stmt->execute()) {
-            throw new Exception("Error executing statement: " . $stmt->error);
+        if (!$result) {
+            throw new Exception("Saving user failed" . $sql . "error: " . mysqli_error($conn));
         }
         echo "New record created successfully";
 
-        $stmt->close();
-
-    } catch (Exception $e) {
-        //handle the exception
-        echo "An error occurred: " . $e->getmessage();
+    } finally {
+        mysqli_close($conn);
     }
-
-        $conn->close();
 }
 
 function findUserByEmail($email) {
+    $user = NULL;
     $conn = connectDatabase();
 
     try {
-        // Prepare and bind
-        $stmt = $conn->prepare("SELECT name, email, password FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
 
-        // Execute the query
-        if (!$stmt->execute()) {
-            throw new Exception("Error executing statement: " . $stmt->error);
+        if (!$result) {
+            throw new Exception("Find user failed" . $sql . "error: " . mysqli_error($conn));
         }
+
+        if (mysqli_num_rows($result)) {
+            $user = mysqli_fetch_assoc($result);
+            //set password > pass
+            $user['pass'] = $user['password'];
+            unset($user['password']);
+        }
+        return $user;
         
-        // Bind the result variable
-        $stmt->bind_result($userName, $userEmail, $userPassword);
-
-        // Fetch the result (if any)
-        $stmt->fetch();
-        //echo $userName, $userEmail, $userPassword;
-
-        // Close the statement
-        $stmt->close();
-
-        $conn->close();
-
-        // Return an associative array with user data or false if not found
-        if ($userEmail !== null) {
-            return [
-                'name' => $userName,
-                'email' => $userEmail,
-                'pass' => $userPassword,
-            ];
-        } else {
-            return false;
-        }
-    } catch (Exception $e) {
-        // Handle the exception, e.g., log the error or display an error message
-        echo "An error occurred: " . $e->getMessage();
+    } finally {
+        mysqli_close($conn);
     }
 }
 
