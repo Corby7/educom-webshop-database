@@ -1,4 +1,5 @@
 <?php
+require('mysqlconnect.php');
 
 /**
  * Get the appropriate salutation based on gender.
@@ -31,8 +32,8 @@ define("RESULT_WRONG_PASSWORD", -2);
  * @param string $pass The user's password.
  * @return array An array containing the authentication result and user information if successful.
  */
-function authenticateUser($conn, $email, $pass) {
-    $user = findUserByEmail($conn, $email);
+function authenticateUser($email, $pass) {
+    $user = findUserByEmail($email);
     
     if(empty($user)) {
         return ['result' => RESULT_UNKNOWN_USER];
