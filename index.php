@@ -1,18 +1,18 @@
 <?php
+
 session_start(); 
 
 require('sessionmanager.php');
 require('validations.php');
 require('userservice.php');
-//require('filerepository.php');
 
 require('home.php');
 require('about.php');
 require('contact.php');
 require('register.php');
 require('login.php');
+require('settings.php');
 require('error.php');
-//require('mysqlconnect.php');
 
 /** MAIN APP */
 $page = getRequestedPage();
@@ -99,10 +99,13 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
-                    require('mysqlconnect.php');
-                    saveUser($conn, $name, $email, $pass);
+                    storeUser($name, $email, $pass);
                     $page = "login";
                 }
+                break;
+
+            case 'settings':
+                $data = validateSettingsForm($data);
                 break;
 
             case 'login':
@@ -110,23 +113,8 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
-                    require('mysqlconnect.php');
-                    // if (findUserByEmail($conn, $email)) {
-                    //     echo "User found";
-                    // } else {
-                    //     echo "User not found";
-                    // }
-                    $result = authenticateUser($conn, $email, $pass);
-
-                    if ($result['result'] === RESULT_UNKNOWN_USER) {
-                        $data['emailunknownErr'] = "E-mailadres is onbekend";
-                    } elseif ($result['result'] === RESULT_WRONG_PASSWORD) {
-                        $data['wrongpassErr'] = "Wachtwoord is onjuist";
-                    } elseif ($result['result'] === RESULT_OK) {
-                        $username = $result['user']['name'];
-                        loginUser($username);
-                        $page = "home";
-                    }
+                    loginUser($username);
+                    $page = "home";
                 }
                 break;
         }
@@ -198,7 +186,10 @@ function showTitle($data) {
                 break;
             case 'login':
                 showLoginTitle();
-                break;    
+                break;
+            case 'settings':
+                showSettingsTitle();
+                break;        
             default:
                 showErrorTitle();
                 break;
@@ -251,7 +242,10 @@ function showHeader($data) {
             break;
         case 'login':
             showLoginHeader();
-            break;     
+            break;
+        case 'settings':
+            showSettingsHeader();
+            break;       
         default:
             showErrorHeader();
             break;
@@ -273,6 +267,8 @@ function showMenu() {
     echo '|'; 
     
     if(isUserLoggedIn()) {
+        showMenuItem("settings", "SETTINGS");
+        echo '|'; 
         showMenuItem("logout", "LOGOUT " . getLoggedInUserName());
     } else {
         showMenuItem("register", "REGISTER"); 
@@ -319,6 +315,9 @@ function showContent($data) {
             break;
         case 'login':
             showLoginForm($data);
+            break;
+        case 'settings':
+            showSettingsForm($data);
             break;
         default:
             showErrorContent();
