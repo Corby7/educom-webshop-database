@@ -5,8 +5,9 @@
  *
  * @param string $username The username of the user to log in.
  */
-function loginUser($username) {
+function loginUser($username, $useremail) {
     $_SESSION['username'] = $username;
+    $_SESSION['useremail'] = $useremail;
 }
 
 /**
@@ -25,6 +26,10 @@ function isUserLoggedIn() {
  */
 function getLoggedInUserName() {
     return isset($_SESSION['username']) ? $_SESSION['username'] : '';
+}
+
+function getLoggedInUserEmail() {
+    return isset($_SESSION['useremail']) ? $_SESSION['useremail'] : '';
 }
 
 /**
