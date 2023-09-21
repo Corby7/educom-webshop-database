@@ -25,19 +25,23 @@ function showSettingsForm($data) {
             <li>
                 <label for="pass">Oud wachtwoord:</label>
                 <input type="password" id="pass" name="pass" value="' . $pass . '">
-                <span class="error">* ' . $passErr . '</span>
+                <span class="error">* ' . $passErr . $wrongpassErr . '</span>
             </li>
 
             <li>
                 <label for="pass">Nieuw wachtwoord:</label>
-                <input type="password" id="pass" name="pass" value="' . $newpass . '">
-                <span class="error">* ' . $newpassErr . '</span>
+                <input type="password" id="newpass" name="newpass" value="' . $newpass . '">
+                <span class="error">* ' . $newpassErr . $oldvsnewpassErr . '</span>
             </li>
 
             <li>
                 <label for="repeatpass">Herhaal nieuw wachtwoord:</label>
                 <input type="password" id="repeatpass" name="repeatpass" value="' . $repeatpass . '">
                 <span class="error">* ' . $repeatpassErr . $passcheckErr . '</span>
+            </li>
+
+            <li>
+                <span class="success">' . $passwordUpdated . '</span>
             </li>
 
             <li>
