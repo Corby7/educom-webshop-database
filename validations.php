@@ -71,9 +71,12 @@ function initializeFormData($formType) {
                 'wrongpassErr' => '',
                 'newpass' => '',
                 'newpassErr' => '',
+                'oldvsnewpassErr' => '',
                 'repeatpass' => '',
                 'repeatpassErr' => '',
                 'passcheckErr' => '',
+                'email' => '',
+                'passwordUpdated' => '',
                 'valid' => ''
             );
             break;
@@ -226,10 +229,11 @@ function validateLoginForm($data) {
         } elseif ($result['result'] === RESULT_OK) {
             $valid = true;
             $username = $result['user']['name'];
+            $useremail = $result['user']['email'];
         }
     };
 
-    return compact ('email', 'pass', 'emailErr', 'passErr', 'emailunknownErr', 'wrongpassErr', 'valid', 'username');
+    return compact ('email', 'pass', 'emailErr', 'passErr', 'emailunknownErr', 'wrongpassErr', 'valid', 'username', 'useremail');
 }
 
 function validateSettingsForm($data) {
@@ -245,18 +249,31 @@ function validateSettingsForm($data) {
         $newpassErr = "Nieuw wachtwoord is vereist";
     }
 
-    // $repeatpass = testInput(getPostVar("repeatpass"));
-    // if (empty($repeatpass)) {
-    //     $repeatpassErr = "Wachtwoord herhalen is vereist";
-    // }
+    $repeatpass = testInput(getPostVar("repeatpass"));
+    if (empty($repeatpass)) {
+        $repeatpassErr = "Wachtwoord herhalen is vereist";
+    }
 
-    // if (empty($passErr) && empty($newpassErr) && empty($repeatpassErr)) {
-    //     $passcheckErr = validatePassword($newpass, $repeatpass);
-    // }
+    if ($pass === $newpass) {
+        $oldvsnewpassErr = "Nieuw wachtwoord mag niet hetzelfde zijn als uw oude wachtwoord";
+    }
 
-    $valid = empty($passErr) && empty($newpassErr) && empty($repeatpassErr) && empty($repeatpassErr);
+    if (empty($passErr) && empty($newpassErr) && empty($repeatpassErr) && empty($oldvsnewpassErr)) {
+        $passcheckErr = validatePassword($newpass, $repeatpass);
+    }
 
-    return compact ('pass', 'passErr', 'newpass', 'newpassErr', 'repeatpass', 'repeatpassErr', 'passcheckErr');//, 'valid');
+    if (empty($oldvsnewpassErr) && empty($passcheckErr)) {
+        $email = getLoggedInUserEmail();
+        $result = authenticateUser($email, $pass);
+
+        if ($result['result'] === RESULT_WRONG_PASSWORD) {
+            $wrongpassErr = "Wachtwoord is onjuist";
+        } elseif ($result['result'] === RESULT_OK) {
+            $valid = true;
+        }
+    }
+
+    return compact ('pass', 'passErr', 'wrongpassErr', 'newpass', 'newpassErr', 'oldvsnewpassErr', 'repeatpass', 'repeatpassErr', 'passcheckErr', 'email', 'passwordUpdated', 'valid');
 }
 
 
