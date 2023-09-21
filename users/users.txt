@@ -1,6 +1,0 @@
-[email]|[name]|[pass]
-coach@man-kind.nl|Geert Weggemans|halt!
-pavlo@man-kind.nl|Corbijn Bulsink|corbijn7
-pavlo2@man-kind.nl|Corbijn Bulsink|corbijn7
-hane@snane|Corbijn Bulisnk|cor
-jo@jo|Corbijn Bulstronk|corry
