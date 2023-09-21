@@ -45,6 +45,9 @@ function initializeFormData($formType) {
                 'repeatpassErr' => '',
                 'passcheckErr' => '',
                 'emailknownErr' => '',
+                //added emailunknownErr & wrongpassErr to dodge undefined variable bug after redirecting to login
+                'emailunknownErr' => '',
+                'wrongpassErr' => '',
                 'valid' => ''
             );
             break;
@@ -60,6 +63,21 @@ function initializeFormData($formType) {
                 'valid' => ''
             );
             break;
+
+        case 'settings':
+            $data = array(
+                'pass' => '',
+                'passErr' => '',
+                'wrongpassErr' => '',
+                'newpass' => '',
+                'newpassErr' => '',
+                'repeatpass' => '',
+                'repeatpassErr' => '',
+                'passcheckErr' => '',
+                'valid' => ''
+            );
+            break;
+        
         
         default:
             // Handle unknown form types or set default values
@@ -175,7 +193,7 @@ function validateRegisterForm($data) {
         $name = $fname . ' ' . $lname;
     }
 
-    return compact ('name', 'fname', 'lname', 'email', 'pass', 'repeatpass', 'fnameErr', 'lnameErr', 'emailErr', 'passErr', 'repeatpassErr', 'passcheckErr', 'emailknownErr', 'valid');
+    return compact ('name', 'fname', 'lname', 'email', 'pass', 'repeatpass', 'fnameErr', 'lnameErr', 'emailErr', 'passErr', 'repeatpassErr', 'passcheckErr', 'emailknownErr', 'emailunknownErr', 'wrongpassErr', 'valid');
 }
 
 /**
@@ -198,10 +216,49 @@ function validateLoginForm($data) {
         $passErr = "Wachtwoord is vereist";
     }
 
-    $valid = empty($emailErr) && empty($passErr);
+    if (empty($emailErr) && empty($passErr)) {
+        $result = authenticateUser($email, $pass);
 
-    return compact ('email', 'pass', 'emailErr', 'passErr', 'emailunknownErr', 'wrongpassErr', 'valid');
+        if ($result['result'] === RESULT_UNKNOWN_USER) {
+            $emailunknownErr = "E-mailadres is onbekend";
+        } elseif ($result['result'] === RESULT_WRONG_PASSWORD) {
+            $wrongpassErr = "Wachtwoord is onjuist";
+        } elseif ($result['result'] === RESULT_OK) {
+            $valid = true;
+            $username = $result['user']['name'];
+        }
+    };
+
+    return compact ('email', 'pass', 'emailErr', 'passErr', 'emailunknownErr', 'wrongpassErr', 'valid', 'username');
 }
+
+function validateSettingsForm($data) {
+    extract($data);
+
+    $pass = testInput(getPostVar("pass"));
+    if (empty($pass)) {
+        $passErr = "Wachtwoord is vereist";
+    }
+
+    $newpass = testInput(getPostVar("newpass"));
+    if (empty($newpass)) {
+        $newpassErr = "Nieuw wachtwoord is vereist";
+    }
+
+    // $repeatpass = testInput(getPostVar("repeatpass"));
+    // if (empty($repeatpass)) {
+    //     $repeatpassErr = "Wachtwoord herhalen is vereist";
+    // }
+
+    // if (empty($passErr) && empty($newpassErr) && empty($repeatpassErr)) {
+    //     $passcheckErr = validatePassword($newpass, $repeatpass);
+    // }
+
+    $valid = empty($passErr) && empty($newpassErr) && empty($repeatpassErr) && empty($repeatpassErr);
+
+    return compact ('pass', 'passErr', 'newpass', 'newpassErr', 'repeatpass', 'repeatpassErr', 'passcheckErr');//, 'valid');
+}
+
 
 /**
  * Sanitize and prepare input data.
