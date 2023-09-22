@@ -236,7 +236,7 @@ function validateLoginForm($data) {
             }
         } catch (Exception $e) {
             logError("Login failed: " . $e->getMessage());
-            
+            $emailErr = "Sorry technisch probleem, inloggen niet mogelijk";
         }
     }
 
@@ -270,13 +270,18 @@ function validateSettingsForm($data) {
     }
 
     if (empty($oldvsnewpassErr) && empty($passcheckErr)) {
-        $email = getLoggedInUserEmail();
-        $result = authenticateUser($email, $pass);
-
-        if ($result['result'] === RESULT_WRONG_PASSWORD) {
-            $wrongpassErr = "Wachtwoord is onjuist";
-        } elseif ($result['result'] === RESULT_OK) {
-            $valid = true;
+        try {
+            $email = getLoggedInUserEmail();
+            $result = authenticateUser($email, $pass);
+    
+            if ($result['result'] === RESULT_WRONG_PASSWORD) {
+                $wrongpassErr = "Wachtwoord is onjuist";
+            } elseif ($result['result'] === RESULT_OK) {
+                $valid = true;
+            }
+        } catch (Exception $e) {
+            logError("Password verify failed: " . $e->getMessage());
+            $passErr = "Sorry technisch probleem, wachtwoord kan niet worden"
         }
     }
 
