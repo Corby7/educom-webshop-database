@@ -26,10 +26,18 @@ nav > ul {
     flex-direction: row;
     justify-content: flex-end;
     height: 40px;
-    gap: 40px;
+    gap: 30px;
     padding: 10px;
     margin: 0px;
     list-style-type: none;
+}
+
+nav > ul.uppernav {
+    color: black;
+    background-color: white;
+}
+
+nav > ul.lowernav {
     background-color: blue;
 }
 
@@ -37,6 +45,11 @@ nav > ul li > a {
     color: white;
     font-weight: bold;
     text-decoration: none;
+}
+
+nav > ul.uppernav li > a {
+    font-size: 15px;
+    color: black;
 }
 
 .success {
