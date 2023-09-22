@@ -9,6 +9,7 @@ require('userservice.php');
 require('home.php');
 require('about.php');
 require('webshop.php');
+require('productpage.php');
 require('contact.php');
 require('register.php');
 require('login.php');
@@ -190,7 +191,10 @@ function showTitle($data) {
                 break;
             case 'webshop':
                 showWebshopTitle();
-                break;    
+                break;
+            case 'productpage':
+                showProductPageTitle();
+                break;        
             case 'contact':
             case 'thanks':
                 showContactTitle();
@@ -249,7 +253,10 @@ function showHeader($data) {
             break;
         case 'webshop':
             showWebshopHeader();
-            break;     
+            break; 
+        case 'productpage':
+            showProductPageHeader();
+            break;        
         case 'contact':
         case 'thanks':
             showContactHeader();
@@ -326,6 +333,9 @@ function showContent($data) {
             break;
         case 'webshop':
             showWebshopContent();
+            break; 
+        case 'productpage':
+            showProductPageContent();
             break; 
         case 'contact':
             showContactForm($data);
