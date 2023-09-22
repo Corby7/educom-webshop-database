@@ -50,6 +50,36 @@ function saveUser($name, $email, $pass) {
     }
 }
 
+function getProducts() {
+    $conn = connectDatabase();
+
+    try {
+        $sql = "SELECT * FROM products";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            throw new Exception("Get products failed: " . mysqli_error($conn));
+        }
+
+        $products = array(); // Create an array to store the products
+
+        if (mysqli_num_rows($result)) {
+            // Fetch all rows as associative arrays and store them in the $products array
+            while ($row = mysqli_fetch_assoc($result)) {
+                $products[] = $row;
+            }
+        }
+
+        // Free result set
+        mysqli_free_result($result);
+
+        return $products; // Return the array of products
+        
+    } finally {
+        mysqli_close($conn);
+    }
+}
+
 function findUserByEmail($email) {
     $user = NULL;
     $conn = connectDatabase();
