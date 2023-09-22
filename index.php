@@ -266,21 +266,24 @@ function showHeader($data) {
 
 /** Display the menu section of the HTML document. */
 function showMenu() { 
-    echo ' 
-    <nav> 
-        <ul>';
+    echo '<nav>';  
+    if(isUserLoggedIn()) {
+        echo '<ul class="uppernav">';
+        showMenuItem("settings", "Account Settings");
+        showMenuItem("logout", "Logout: " . getLoggedInUserName());
+        echo '
+        </ul>';
+    }
+    echo '<ul class="lowernav">';
     showMenuItem("home", "HOME"); 
     echo '|';
     showMenuItem("about", "ABOUT");
     echo '|'; 
-    showMenuItem("contact", "CONTACT");
+    showMenuItem("webshop", "WEBSHOP");
     echo '|'; 
-    
-    if(isUserLoggedIn()) {
-        showMenuItem("settings", "SETTINGS");
+    showMenuItem("contact", "CONTACT");
+    if(!isUserLoggedIn()) {
         echo '|'; 
-        showMenuItem("logout", "LOGOUT " . getLoggedInUserName());
-    } else {
         showMenuItem("register", "REGISTER"); 
         echo '|';
         showMenuItem("login", "LOGIN");
