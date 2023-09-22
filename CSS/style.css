@@ -15,28 +15,33 @@ ul.products {
     justify-content: center;
 }
 
-ul.products > ul.productcard {
+ul.products > a.product-link {
+    text-decoration: none;
+    color: black;
+}
+
+/* Style for product card container */
+ul.products > a.product-link > ul.productcard {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    align-items: center;
+    align-items: flex-start;
     padding: 10px;
     border: solid black 2px;
     list-style-type: none;
 }
 
-ul.products > ul.productcard > .productname, .description, .price {
-    display: flex;
-    align-self: flex-start;
-}
-
-ul.products > ul.productcard > .productname {
+ul.products > a.product-link > ul.productcard > li.productname {
     font-size: 13px;
     font-weight: bold;
 }
 
-ul.products > ul.productcard > .price {
+ul.products > a.product-link > ul.productcard > li.price {
     font-style: italic;
+}
+
+ul.products > a.product-link:hover {
+    color: blue;
 }
 
 body {

@@ -20,13 +20,15 @@ function showWebshopContent() {
         extract($product);
 
         echo '
-        <ul class="productcard">
-            <li>' . $id . '</li>
-            <li><img src="images/' . $filenameimage . '"</li>
-            <li class="productname">' . $name . '</li>
-            <li class="description">' . $description . '</li>
-            <li class="price">€' . $price . '</li>
-        </ul>';
+        <a href="index.php?page=about" class="product-link">
+            <ul class="productcard">
+                <li>' . $id . '</li>
+                <li><img src="images/' . $filenameimage . '"</li>
+                <li class="productname">' . $name . '</li>
+                <li class="description">' . $description . '</li>
+                <li class="price">€' . $price . '</li>
+            </ul>
+        </a>';
     }
 
     echo '</ul>';
