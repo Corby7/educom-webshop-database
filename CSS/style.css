@@ -2,6 +2,43 @@
     box-sizing: border-box;
 }
 
+img {
+    width: 220px;
+    height: 200px;
+}
+
+ul.products {
+    display: grid;
+    padding: 0;
+    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+    grid-gap: 16px;
+    justify-content: center;
+}
+
+ul.products > ul.productcard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    padding: 10px;
+    border: solid black 2px;
+    list-style-type: none;
+}
+
+ul.products > ul.productcard > .productname, .description, .price {
+    display: flex;
+    align-self: flex-start;
+}
+
+ul.products > ul.productcard > .productname {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+ul.products > ul.productcard > .price {
+    font-style: italic;
+}
+
 body {
     display: flex;
     justify-content: center;
