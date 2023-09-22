@@ -281,7 +281,7 @@ function validateSettingsForm($data) {
             }
         } catch (Exception $e) {
             logError("Password verify failed: " . $e->getMessage());
-            $passErr = "Sorry technisch probleem, wachtwoord kan niet worden"
+            $passErr = "Sorry technisch probleem, wachtwoord kan niet worden";
         }
     }
 
