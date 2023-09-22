@@ -8,6 +8,7 @@ require('userservice.php');
 
 require('home.php');
 require('about.php');
+require('webshop.php');
 require('contact.php');
 require('register.php');
 require('login.php');
@@ -187,6 +188,9 @@ function showTitle($data) {
             case 'about':
                 showAboutTitle();
                 break;
+            case 'webshop':
+                showWebshopTitle();
+                break;    
             case 'contact':
             case 'thanks':
                 showContactTitle();
@@ -243,6 +247,9 @@ function showHeader($data) {
         case 'about':
             showAboutHeader();
             break;
+        case 'webshop':
+            showWebshopHeader();
+            break;     
         case 'contact':
         case 'thanks':
             showContactHeader();
@@ -317,6 +324,9 @@ function showContent($data) {
         case 'about':
             showAboutContent();
             break;
+        case 'webshop':
+            showWebshopContent();
+            break; 
         case 'contact':
             showContactForm($data);
             break; 
