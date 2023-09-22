@@ -15,13 +15,13 @@ ul.products {
     justify-content: center;
 }
 
-ul.products > a.product-link {
+ul.products > a.productlink {
     text-decoration: none;
     color: black;
 }
 
 /* Style for product card container */
-ul.products > a.product-link > ul.productcard {
+ul.products > a.productlink > ul.productcard {
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -31,16 +31,16 @@ ul.products > a.product-link > ul.productcard {
     list-style-type: none;
 }
 
-ul.products > a.product-link > ul.productcard > li.productname {
+ul.products > a.productlink > ul.productcard > li.productname {
     font-size: 13px;
     font-weight: bold;
 }
 
-ul.products > a.product-link > ul.productcard > li.price {
+ul.products > a.productlink > ul.productcard > li.price {
     font-style: italic;
 }
 
-ul.products > a.product-link:hover {
+ul.products > a.productlink:hover {
     color: blue;
 }
 
