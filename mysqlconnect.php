@@ -6,9 +6,9 @@ function connectDatabase() {
     $password = "1234";
     $dbname = "corbijns_webshop";
 
-    // Create connection
+    //create connection
     $conn = mysqli_connect($servername, $username, $password, $dbname);
-    // Check connection
+    //check connection
     if (!$conn) {
         throw new Exception("Connection failed: " . mysqli_connect_error());
     }
@@ -50,6 +50,28 @@ function saveUser($name, $email, $pass) {
     }
 }
 
+function getProduct($id) {
+    $conn = connectDatabase();
+
+    try {
+        $sql = "SELECT * FROM products WHERE id = '$id'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            throw new Exception("Get product failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result)) {
+            $product = mysqli_fetch_assoc($result);
+        }
+
+        return $product; //return the array of product
+        
+    } finally {
+        mysqli_close($conn);
+    }
+} 
+
 function getProducts() {
     $conn = connectDatabase();
 
@@ -61,19 +83,19 @@ function getProducts() {
             throw new Exception("Get products failed: " . mysqli_error($conn));
         }
 
-        $products = array(); // Create an array to store the products
+        $products = array(); //create an array to store the products
 
         if (mysqli_num_rows($result)) {
-            // Fetch all rows as associative arrays and store them in the $products array
+            //fetch all rows as associative arrays and store them in the $products array
             while ($row = mysqli_fetch_assoc($result)) {
                 $products[] = $row;
             }
         }
 
-        // Free result set
+        //free result set
         mysqli_free_result($result);
 
-        return $products; // Return the array of products
+        return $products; //return the array of products
         
     } finally {
         mysqli_close($conn);
