@@ -10,6 +10,7 @@ require('home.php');
 require('about.php');
 require('webshop.php');
 require('productpage.php');
+require('shoppingcart.php');
 require('contact.php');
 require('register.php');
 require('login.php');
@@ -128,6 +129,11 @@ function processRequest($page) {
                     $page = "home";
                 }
                 break;
+
+            case 'shoppingcart':
+                handleActions();
+                $data['products'] = populateCart();
+                break;
         }
 
         $data['page'] = $page;
@@ -138,7 +144,7 @@ function processRequest($page) {
             logoutUser();
             $page = "home";
         } elseif ($page === 'webshop') {
-            $data['products'] = getProducts();
+            $data['products'] = getAllProducts();
 
         } elseif (substr($page, 0, 11) === 'productpage') {
             $productid = getProductIdFromPage($page);
@@ -149,6 +155,24 @@ function processRequest($page) {
         $data['page'] = $page;
         //var_dump($data);
         return $data;
+    }
+}
+
+function handleActions() {
+    $action = getPostVar("action");
+
+    switch($action) {
+        case "addtocart":
+            $productId = getPostVar("id");
+            addToCart($productId);
+            break;
+    }
+}
+
+function populateCart() {
+    if (isset($_SESSION['shoppingcart'])) {
+    $productIds = array_keys($_SESSION['shoppingcart']);
+    return $cartProducts = getCartProducts($productIds);
     }
 }
 
@@ -202,7 +226,10 @@ function showTitle($data) {
                 break;
             case 'productpage':
                 showProductPageTitle($data);
-                break;        
+                break;
+            case 'shoppingcart':
+                showShoppingCartTitle();
+                break;          
             case 'contact':
             case 'thanks':
                 showContactTitle();
@@ -264,7 +291,10 @@ function showHeader($data) {
             break; 
         case 'productpage':
             showProductPageHeader();
-            break;        
+            break;       
+        case 'shoppingcart':
+            showShoppingCartHeader();
+            break;  
         case 'contact':
         case 'thanks':
             showContactHeader();
@@ -293,8 +323,8 @@ function showMenu() {
         echo '<ul class="uppernav">';
         showMenuItem("settings", "Account Settings");
         showMenuItem("logout", "Logout: " . getLoggedInUserName());
-        echo '
-        </ul>';
+        showMenuItem("shoppingcart", "Shopping Cart");
+        echo '</ul>';
     }
     echo '<ul class="lowernav">';
     showMenuItem("home", "HOME"); 
@@ -344,6 +374,9 @@ function showContent($data) {
             break; 
         case 'productpage':
             showProductPageContent($data);
+            break; 
+        case 'shoppingcart':
+            showShoppingCartContent($data);
             break; 
         case 'contact':
             showContactForm($data);
