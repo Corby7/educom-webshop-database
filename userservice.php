@@ -76,4 +76,10 @@ function updatePasswordByEmail($email, $newpass, $data) {
     return $data;
 }
 
+function getProductIdFromPage($page) {
+    $idarray = explode('productpage', $page);
+    $idstring = implode('', $idarray);
+    return $idstring;
+}
+
 ?>
