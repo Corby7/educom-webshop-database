@@ -2,48 +2,6 @@
     box-sizing: border-box;
 }
 
-img {
-    width: 220px;
-    height: 200px;
-}
-
-ul.products {
-    display: grid;
-    padding: 0;
-    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
-    grid-gap: 16px;
-    justify-content: center;
-}
-
-ul.products > a.productlink {
-    text-decoration: none;
-    color: black;
-}
-
-/* Style for product card container */
-ul.products > a.productlink > ul.productcard {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: flex-start;
-    padding: 10px;
-    border: solid black 2px;
-    list-style-type: none;
-}
-
-ul.products > a.productlink > ul.productcard > li.productname {
-    font-size: 13px;
-    font-weight: bold;
-}
-
-ul.products > a.productlink > ul.productcard > li.price {
-    font-style: italic;
-}
-
-ul.products > a.productlink:hover {
-    color: blue;
-}
-
 body {
     display: flex;
     justify-content: center;
@@ -154,7 +112,67 @@ nav > ul.uppernav li > a {
 
 .flex-inner li {
     gap: 5px;
-}  
+}
+
+div.productinfo {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    gap: 15px;
+    align-items:self-start;
+}
+
+ul.products {
+    display: grid;
+    padding: 0;
+    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+    grid-gap: 16px;
+    justify-content: center;
+}
+
+ul.products > a.productlink {
+    text-decoration: none;
+    color: black;
+}
+
+/* Style for product card container */
+ul.products > a.productlink > ul.productcard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-start;
+    padding: 10px;
+    border: solid black 2px;
+    list-style-type: none;
+}
+
+ul.products > a.productlink > ul.productcard > li > img {
+    width: 220px;
+    height: 200px;
+}
+
+ul.product {
+    display: flex;
+    list-style-type: none;
+}
+
+ul.product > div.productimage > li > img {
+    width: 350px;
+    height: 300px;
+}
+
+li.productname {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+li.price {
+    font-style: italic;
+}
+
+ul.products > a.productlink:hover {
+    color: blue;
+}
 
 footer {
     display: flex;
