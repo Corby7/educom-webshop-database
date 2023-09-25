@@ -12,13 +12,21 @@ erDiagram
         string email     UK
         string password
     }    
-    orders ||--|{ products : Contains
+    orders ||--|{ orderlines : Contains
     orders {
         int    id                PK
         int    user_id           FK
+        string date  
+    } 
+
+    orderlines }|--|| products : Contains
+    orderlines {
+        int    id                PK
+        int    order_id           FK
         int    product_id        FK
         float  amount   
-    }        
+    } 
+
     products {
         int    id                PK
         string name
