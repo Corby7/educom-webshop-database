@@ -72,7 +72,37 @@ function getProduct($id) {
     }
 } 
 
-function getProducts() {
+function getCartProducts(array $productIds) {
+    $conn = connectDatabase();
+
+    try {
+        $productIdsString = implode(',', $productIds);
+
+        $sql = "SELECT * FROM products WHERE id IN ($productIdsString)";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            throw new Exception("Get shopping cart products failed: " . mysqli_error($conn));
+        }
+
+        $cartProducts = array();
+
+        if (mysqli_num_rows($result)) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $cartProducts[] = $row;
+            }
+        }
+
+        mysqli_free_result($result);
+
+        return $cartProducts;
+        
+    } finally {
+        mysqli_close($conn);
+    }
+}
+
+function getAllProducts() {
     $conn = connectDatabase();
 
     try {
