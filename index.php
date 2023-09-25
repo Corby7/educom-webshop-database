@@ -137,9 +137,17 @@ function processRequest($page) {
         if ($page === 'logout') {
             logoutUser();
             $page = "home";
+        } elseif ($page === 'webshop') {
+            $data['products'] = getProducts();
+
+        } elseif (substr($page, 0, 11) === 'productpage') {
+            $productid = getProductIdFromPage($page);
+            $data['product'] = getProduct($productid);
+            $page = "productpage";
         }
 
         $data['page'] = $page;
+        //var_dump($data);
         return $data;
     }
 }
@@ -193,7 +201,7 @@ function showTitle($data) {
                 showWebshopTitle();
                 break;
             case 'productpage':
-                showProductPageTitle();
+                showProductPageTitle($data);
                 break;        
             case 'contact':
             case 'thanks':
@@ -332,10 +340,10 @@ function showContent($data) {
             showAboutContent();
             break;
         case 'webshop':
-            showWebshopContent();
+            showWebshopContent($data);
             break; 
         case 'productpage':
-            showProductPageContent();
+            showProductPageContent($data);
             break; 
         case 'contact':
             showContactForm($data);
