@@ -8,6 +8,7 @@
 function loginUser($username, $useremail) {
     $_SESSION['username'] = $username;
     $_SESSION['useremail'] = $useremail;
+    $_SESSION['shoppingcart'] = array();
 }
 
 /**
@@ -41,6 +42,16 @@ function logoutUser() {
 
     // destroy the session
     session_destroy(); 
+}
+
+function addToCart($productId) {
+    if (array_key_exists($productId, $_SESSION['shoppingcart'])) {
+        $_SESSION['shoppingcart'][$productId] += 1;
+        //echo "item plus 1";
+    } else {
+        $_SESSION['shoppingcart'][$productId] = 1;
+        //echo "item is 1";
+    }
 }
 
 ?>
