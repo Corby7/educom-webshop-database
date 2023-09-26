@@ -132,17 +132,22 @@ function processRequest($page) {
 
             case 'shoppingcart':
                 handleActions();
-                $data['products'] = populateCart();
+                if (empty($_SESSION['shoppingcart'])) {
+                    $page = 'emptyshoppingcart';
+                } else {
+                    $data['products'] = populateCart();
+                }
                 break;
         }
 
         $data['page'] = $page;
         return $data;
 
-    } else {
+    } else { //change this to switch case later
         if ($page === 'logout') {
             logoutUser();
             $page = "home";
+
         } elseif ($page === 'webshop') {
             $data['products'] = getAllProducts();
 
@@ -150,6 +155,13 @@ function processRequest($page) {
             $productid = getProductIdFromPage($page);
             $data['product'] = getProduct($productid);
             $page = "productpage";
+
+        } elseif ($page === 'shoppingcart') {
+            if (empty($_SESSION['shoppingcart'])) {
+                $page = 'emptyshoppingcart';
+            } else {
+                $data['products'] = populateCart();
+            }
         }
 
         $data['page'] = $page;
@@ -166,15 +178,12 @@ function handleActions() {
             $productId = getPostVar("id");
             addToCart($productId);
             break;
+        case "removefromcart":
+            $productId = getPostVar("id");
+            removeFromCart($productId);
+            break;
     }
-}
-
-function populateCart() {
-    if (isset($_SESSION['shoppingcart'])) {
-    $productIds = array_keys($_SESSION['shoppingcart']);
-    return $cartProducts = getCartProducts($productIds);
-    }
-}
+}   
 
 /**
  * Display the response page based on the input data.
@@ -228,6 +237,7 @@ function showTitle($data) {
                 showProductPageTitle($data);
                 break;
             case 'shoppingcart':
+            case 'emptyshoppingcart':
                 showShoppingCartTitle();
                 break;          
             case 'contact':
@@ -279,6 +289,7 @@ function endDocument() {
 function showHeader($data) {
     echo '<header>' . PHP_EOL;
     echo '  <h1>';
+    //var_dump($_SESSION['shoppingcart']);
     switch ($data['page']) {
         case 'home':
             showHomeHeader();
@@ -293,6 +304,7 @@ function showHeader($data) {
             showProductPageHeader();
             break;       
         case 'shoppingcart':
+        case 'emptyshoppingcart':
             showShoppingCartHeader();
             break;  
         case 'contact':
@@ -377,7 +389,10 @@ function showContent($data) {
             break; 
         case 'shoppingcart':
             showShoppingCartContent($data);
-            break; 
+            break;
+        case 'emptyshoppingcart':
+            showEmptyShoppingCart();
+            break;
         case 'contact':
             showContactForm($data);
             break; 
