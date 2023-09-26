@@ -182,7 +182,9 @@ ul.products > a.productlink:hover {
 
 div.shoppingcart {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 15px;
 }
 
 div.shoppingcart > table {
