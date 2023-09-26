@@ -76,12 +76,6 @@ function updatePasswordByEmail($email, $newpass, $data) {
     return $data;
 }
 
-function getProductIdFromPage($page) {
-    $idarray = explode('productpage', $page);
-    $idstring = implode('', $idarray);
-    return $idstring;
-}
-
 function populateCart() {
     $productIds = array_keys($_SESSION['shoppingcart']);
     return $cartProducts = getCartProducts($productIds);

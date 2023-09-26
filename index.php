@@ -151,8 +151,8 @@ function processRequest($page) {
         } elseif ($page === 'webshop') {
             $data['products'] = getAllProducts();
 
-        } elseif (substr($page, 0, 11) === 'productpage') {
-            $productid = getProductIdFromPage($page);
+        } elseif ($page === 'productpage') {
+            $productid = getUrlVar("productid");
             $data['product'] = getProduct($productid);
             $page = "productpage";
 

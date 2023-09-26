@@ -18,7 +18,7 @@ function showWebshopContent($data) {
         extract($product);
         
         echo '
-        <a href="index.php?page=productpage' . $id . '" class="productlink">
+        <a href="index.php?page=productpage&productid=' . $id . '" class="productlink">
             <ul class="productcard">
                 <li>' . $id . '</li>
                 <li><img src="images/' . $filenameimage . '"></li>
