@@ -143,25 +143,31 @@ function processRequest($page) {
         $data['page'] = $page;
         return $data;
 
-    } else { //change this to switch case later
-        if ($page === 'logout') {
-            logoutUser();
-            $page = "home";
+    } else {
 
-        } elseif ($page === 'webshop') {
-            $data['products'] = getAllProducts();
+        switch($page) {
+            case 'logout':
+                logoutUser();
+                $page = "home";
+                break;
+                
+            case 'webshop':
+                $data['products'] = getAllProducts();
+                break;
 
-        } elseif ($page === 'productpage') {
-            $productid = getUrlVar("productid");
-            $data['product'] = getProduct($productid);
-            $page = "productpage";
+            case 'productpage':
+                $productid = getUrlVar("productid");
+                $data['product'] = getProduct($productid);
+                $page = "productpage";
+                break;
 
-        } elseif ($page === 'shoppingcart') {
-            if (empty($_SESSION['shoppingcart'])) {
-                $page = 'emptyshoppingcart';
-            } else {
-                $data['products'] = populateCart();
-            }
+            case 'shoppingcart':
+                if (empty($_SESSION['shoppingcart'])) {
+                    $page = 'emptyshoppingcart';
+                } else {
+                    $data['products'] = populateCart();
+                }
+                break;
         }
 
         $data['page'] = $page;
