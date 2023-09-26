@@ -47,10 +47,18 @@ function logoutUser() {
 function addToCart($productId) {
     if (array_key_exists($productId, $_SESSION['shoppingcart'])) {
         $_SESSION['shoppingcart'][$productId] += 1;
-        //echo "item plus 1";
     } else {
         $_SESSION['shoppingcart'][$productId] = 1;
-        //echo "item is 1";
+    }
+}
+
+function removeFromCart($productId) {
+    if (array_key_exists($productId, $_SESSION['shoppingcart'])) {
+        if ($_SESSION['shoppingcart'][$productId] === 1) {
+            unset($_SESSION['shoppingcart'][$productId]);
+        } else {
+        $_SESSION['shoppingcart'][$productId] -= 1;
+        }
     }
 }
 
