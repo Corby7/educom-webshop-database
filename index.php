@@ -138,6 +138,12 @@ function processRequest($page) {
                     $data['products'] = populateCart();
                 }
                 break;
+            
+            case 'checkout':
+                echo 'HELLO';
+                $order = $_SESSION['shoppingcart'];
+                var_dump($order);
+                break;
         }
 
         $data['page'] = $page;
@@ -295,7 +301,7 @@ function endDocument() {
 function showHeader($data) {
     echo '<header>' . PHP_EOL;
     echo '  <h1>';
-    //var_dump($_SESSION['shoppingcart']);
+    var_dump($_SESSION['shoppingcart']);
     switch ($data['page']) {
         case 'home':
             showHomeHeader();

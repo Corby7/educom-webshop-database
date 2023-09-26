@@ -58,6 +58,10 @@ function showShoppingCartContent($data) {
                 <th>Totaalprijs: €' . number_format($total, 2) . '</th>
             </tr>
         </table>
+        <form method="post" action="index.php">
+            <input type="hidden" name="id" value=' . $id . '>
+            <button type="submit" name="page" value="checkout">Afrekenen</button>
+        </form>
     </div>';
 }
 
