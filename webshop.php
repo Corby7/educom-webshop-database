@@ -21,9 +21,22 @@ function showWebshopContent($data) {
         <a href="index.php?page=productpage' . $id . '" class="productlink">
             <ul class="productcard">
                 <li>' . $id . '</li>
-                <li><img src="images/' . $filenameimage . '"</li>
-                <li class="productname">' . $name . '</li>
-                <li class="price">€' . $price . '</li>
+                <li><img src="images/' . $filenameimage . '"></li>
+                <div class="productcardbottom">
+                    <div class="productcardleft">
+                        <li class="productname">' . $name . '</li>
+                        <li class="price">€' . $price . '</li>
+                    </div>
+                    <div class="productcardright">
+                        <li>
+                            <form method="post" action="index.php">
+                                <input type="hidden" name="id" value=' . $id . '>
+                                <input type="hidden" name="action" value="addtocart">
+                                <button type="submit" name="page" value="shoppingcart">Add to cart</button>
+                            </form>
+                        </li>
+                    </div>
+                </div>
             </ul>
         </a>';
     }
