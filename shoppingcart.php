@@ -23,15 +23,19 @@ function showShoppingCartContent($data) {
                 <th>Subtotaal</th>
             </tr>';
 
+            $total = 0;
             foreach ($data['products'] as $product) {
                 extract($product);
                 $quantity = $_SESSION['shoppingcart'][$id];
+                $subtotal = $price * $quantity;
+                $total += $subtotal;
                 
                 echo '
                 <tr>
-                    <td><img src="images/' . $filenameimage . '"</td>
-                    <td>' . $name . '</td>
-                    <td>€' . $price . '</td>
+                        <td><a href="index.php?page=productpage&productid=' . $id . '" class="productlink"><img src="images/' . $filenameimage . '"</a></td>
+                        <td><a href="index.php?page=productpage&productid=' . $id . '" class="productlink">' . $name . '</a></td>
+                    </a>
+                    <td>€' . number_format($price,2) . '</td>
                     <td>
                         <form method="post" action="index.php">
                             <input type="hidden" name="id" value=' . $id . '>
@@ -41,20 +45,24 @@ function showShoppingCartContent($data) {
                             <button type="submit" name="action" value="addtocart">+</button>
                         </form>
                     </td>
-                    <td>€' . $subtotal = $price * $quantity . '</td>
+                    <td>€' . number_format($subtotal, 2) . '</td>
                 </tr>';
             }
             
             echo '
             <tr>
-                <th>Totaal:</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Totaalprijs: €' . number_format($total, 2) . '</th>
             </tr>
         </table>
     </div>';
 }
 
 function showEmptyShoppingCart() {
-    echo 'Uw winkelmandje is leeg.';
+    echo '<h1>Uw winkelmandje is leeg.</h1>';
 }
 
 ?>
