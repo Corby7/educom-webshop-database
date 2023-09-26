@@ -82,4 +82,9 @@ function getProductIdFromPage($page) {
     return $idstring;
 }
 
+function populateCart() {
+    $productIds = array_keys($_SESSION['shoppingcart']);
+    return $cartProducts = getCartProducts($productIds);
+}
+
 ?>
