@@ -140,17 +140,9 @@ function processRequest($page) {
                 break;
             
             case 'checkout':
-                echo 'HELLO';
-                $cart = $_SESSION['shoppingcart'];
-                $email = $_SESSION['useremail'];
-                //create order
-                $useridArray = getUserId($email);
-                $useridString = reset($useridArray); 
-                $date = date('Y-m-d H:i:s');
-                $orderid = createOrder($useridString, $date);
-                echo $orderid;
-                //var_dump($userid);
-                createOrderLine($orderid, $cart);
+                if (makeOrder()) {
+                    $page = 'ordersucces';
+                }
                 break;
         }
 
@@ -258,6 +250,7 @@ function showTitle($data) {
                 break;
             case 'shoppingcart':
             case 'emptyshoppingcart':
+            case 'ordersucces':
                 showShoppingCartTitle();
                 break;          
             case 'contact':
@@ -309,7 +302,6 @@ function endDocument() {
 function showHeader($data) {
     echo '<header>' . PHP_EOL;
     echo '  <h1>';
-    var_dump($_SESSION['shoppingcart']);
     switch ($data['page']) {
         case 'home':
             showHomeHeader();
@@ -325,6 +317,7 @@ function showHeader($data) {
             break;       
         case 'shoppingcart':
         case 'emptyshoppingcart':
+        case 'ordersucces':
             showShoppingCartHeader();
             break;  
         case 'contact':
@@ -412,6 +405,9 @@ function showContent($data) {
             break;
         case 'emptyshoppingcart':
             showEmptyShoppingCart();
+            break;
+        case 'ordersucces':
+            showOrderSucces();
             break;
         case 'contact':
             showContactForm($data);
