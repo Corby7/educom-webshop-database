@@ -33,6 +33,41 @@ function overwritePassword($email, $newpass) {
     }
 }
 
+function createOrder($id, $date) {
+    $conn = connectDatabase();
+
+    try {
+        $sql = "INSERT INTO orders (user_id, date) VALUES ('$id', '$date')";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            throw new Exception("Creating order failed" . $sql . "error: " . mysqli_error($conn));
+        }
+
+    } finally {
+        return mysqli_insert_id($conn);
+        mysqli_close($conn);
+    }
+}
+
+function createOrderLine($orderid, $cart) {
+    $conn = connectDatabase();
+
+    try {
+        foreach ($cart as $productid => $amount) {
+            $sql = "INSERT INTO orderlines (order_id, product_id, amount) VALUES ('$orderid', '$productid', '$amount')";
+            $result = mysqli_query($conn, $sql);
+
+            if (!$result) {
+                throw new Exception("Adding orderline failed" . $sql . "error: " . mysqli_error($conn));
+            }
+        }
+
+    } finally {
+        mysqli_close($conn);
+    }
+}
+
 function saveUser($name, $email, $pass) {
     $conn = connectDatabase();
 
@@ -43,12 +78,33 @@ function saveUser($name, $email, $pass) {
         if (!$result) {
             throw new Exception("Saving user failed" . $sql . "error: " . mysqli_error($conn));
         }
-        echo "New record created successfully";
 
     } finally {
         mysqli_close($conn);
     }
 }
+
+function getUserId($email) {
+    $conn = connectDatabase();
+
+    try {
+        $sql = "SELECT id FROM users WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            throw new Exception("Get userid failed: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result)) {
+            $userid = mysqli_fetch_assoc($result);
+        }
+
+        return $userid;
+        
+    } finally {
+        mysqli_close($conn);
+    }
+} 
 
 function getProduct($id) {
     $conn = connectDatabase();
@@ -72,13 +128,13 @@ function getProduct($id) {
     }
 } 
 
-function getCartProducts(array $productIds) {
+function getCartProducts(array $productids) {
     $conn = connectDatabase();
 
     try {
-        $productIdsString = implode(',', $productIds);
+        $productidsString = implode(',', $productids);
 
-        $sql = "SELECT * FROM products WHERE id IN ($productIdsString)";
+        $sql = "SELECT * FROM products WHERE id IN ($productidsString)";
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {

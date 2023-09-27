@@ -77,8 +77,15 @@ function updatePasswordByEmail($email, $newpass, $data) {
 }
 
 function populateCart() {
-    $productIds = array_keys($_SESSION['shoppingcart']);
-    return $cartProducts = getCartProducts($productIds);
+    $productids = array_keys($_SESSION['shoppingcart']);
+    return $cartProducts = getCartProducts($productids);
 }
+
+function makeOrder() {
+    
+    createOrder();
+    createOrderline();
+}
+
 
 ?>

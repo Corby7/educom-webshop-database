@@ -141,8 +141,16 @@ function processRequest($page) {
             
             case 'checkout':
                 echo 'HELLO';
-                $order = $_SESSION['shoppingcart'];
-                var_dump($order);
+                $cart = $_SESSION['shoppingcart'];
+                $email = $_SESSION['useremail'];
+                //create order
+                $useridArray = getUserId($email);
+                $useridString = reset($useridArray); 
+                $date = date('Y-m-d H:i:s');
+                $orderid = createOrder($useridString, $date);
+                echo $orderid;
+                //var_dump($userid);
+                createOrderLine($orderid, $cart);
                 break;
         }
 
@@ -187,12 +195,12 @@ function handleActions() {
 
     switch($action) {
         case "addtocart":
-            $productId = getPostVar("id");
-            addToCart($productId);
+            $productid = getPostVar("id");
+            addToCart($productid);
             break;
         case "removefromcart":
-            $productId = getPostVar("id");
-            removeFromCart($productId);
+            $productid = getPostVar("id");
+            removeFromCart($productid);
             break;
     }
 }   
