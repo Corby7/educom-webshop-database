@@ -33,41 +33,6 @@ function overwritePassword($email, $newpass) {
     }
 }
 
-function createOrder($id, $date) {
-    $conn = connectDatabase();
-
-    try {
-        $sql = "INSERT INTO orders (user_id, date) VALUES ('$id', '$date')";
-        $result = mysqli_query($conn, $sql);
-
-        if (!$result) {
-            throw new Exception("Creating order failed" . $sql . "error: " . mysqli_error($conn));
-        }
-
-    } finally {
-        return mysqli_insert_id($conn);
-        mysqli_close($conn);
-    }
-}
-
-function createOrderLine($orderid, $cart) {
-    $conn = connectDatabase();
-
-    try {
-        foreach ($cart as $productid => $amount) {
-            $sql = "INSERT INTO orderlines (order_id, product_id, amount) VALUES ('$orderid', '$productid', '$amount')";
-            $result = mysqli_query($conn, $sql);
-
-            if (!$result) {
-                throw new Exception("Adding orderline failed" . $sql . "error: " . mysqli_error($conn));
-            }
-        }
-
-    } finally {
-        mysqli_close($conn);
-    }
-}
-
 function saveUser($name, $email, $pass) {
     $conn = connectDatabase();
 
@@ -79,6 +44,31 @@ function saveUser($name, $email, $pass) {
             throw new Exception("Saving user failed" . $sql . "error: " . mysqli_error($conn));
         }
 
+    } finally {
+        mysqli_close($conn);
+    }
+}
+
+function findUserByEmail($email) {
+    $user = NULL;
+    $conn = connectDatabase();
+
+    try {
+        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql);
+
+        if (!$result) {
+            throw new Exception("Find user failed" . $sql . "error: " . mysqli_error($conn));
+        }
+
+        if (mysqli_num_rows($result)) {
+            $user = mysqli_fetch_assoc($result);
+            //set password > pass
+            $user['pass'] = $user['password'];
+            unset($user['password']);
+        }
+        return $user;
+        
     } finally {
         mysqli_close($conn);
     }
@@ -188,29 +178,40 @@ function getAllProducts() {
     }
 }
 
-function findUserByEmail($email) {
-    $user = NULL;
+function createOrderSQL($id, $date) {
     $conn = connectDatabase();
 
     try {
-        $sql = "SELECT * FROM users WHERE email = '$email'";
+        $sql = "INSERT INTO orders (user_id, date) VALUES ('$id', '$date')";
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {
-            throw new Exception("Find user failed" . $sql . "error: " . mysqli_error($conn));
+            throw new Exception("Creating order failed" . $sql . "error: " . mysqli_error($conn));
         }
 
-        if (mysqli_num_rows($result)) {
-            $user = mysqli_fetch_assoc($result);
-            //set password > pass
-            $user['pass'] = $user['password'];
-            unset($user['password']);
+    } finally {
+        return mysqli_insert_id($conn);
+        //mysqli_close($conn); only close database once instead of twice?
+    }
+}
+
+function createOrderLineSQL($orderid, $cart) {
+    $conn = connectDatabase();
+
+    try {
+        foreach ($cart as $productid => $amount) {
+            $sql = "INSERT INTO orderlines (order_id, product_id, amount) VALUES ('$orderid', '$productid', '$amount')";
+            $result = mysqli_query($conn, $sql);
+
+            if (!$result) {
+                throw new Exception("Adding orderline failed" . $sql . "error: " . mysqli_error($conn));
+            }
         }
-        return $user;
-        
+
     } finally {
         mysqli_close($conn);
     }
 }
+
 
 ?> 
