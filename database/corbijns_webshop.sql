@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2023 at 08:57 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Gegenereerd op: 27 sep 2023 om 13:32
+-- Serverversie: 10.4.28-MariaDB
+-- PHP-versie: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderlines`
+-- Tabelstructuur voor tabel `orderlines`
 --
 
 CREATE TABLE `orderlines` (
@@ -34,22 +34,65 @@ CREATE TABLE `orderlines` (
   `amount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `orderlines`
+--
+
+INSERT INTO `orderlines` (`id`, `order_id`, `product_id`, `amount`) VALUES
+(4, 29, 1, 2),
+(5, 29, 3, 4),
+(6, 29, 2, 1),
+(7, 30, 3, 8),
+(8, 31, 3, 5),
+(9, 31, 2, 1),
+(10, 32, 5, 1),
+(11, 33, 5, 1),
+(12, 33, 1, 1),
+(13, 34, 5, 1),
+(14, 34, 1, 1),
+(15, 34, 2, 1),
+(16, 35, 5, 1),
+(17, 35, 1, 1),
+(18, 35, 2, 1),
+(19, 36, 5, 1),
+(20, 36, 1, 1),
+(21, 36, 2, 1),
+(22, 37, 5, 1),
+(23, 37, 1, 1),
+(24, 37, 2, 2);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Tabelstructuur voor tabel `orders`
 --
 
 CREATE TABLE `orders` (
   `id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
-  `date` datetime(6) NOT NULL
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `date`) VALUES
+(28, 2, '2023-09-27 11:43:02'),
+(29, 2, '2023-09-27 11:51:22'),
+(30, 2, '2023-09-27 12:01:24'),
+(31, 2, '2023-09-27 12:02:18'),
+(32, 1, '2023-09-27 12:09:52'),
+(33, 1, '2023-09-27 12:18:40'),
+(34, 1, '2023-09-27 12:24:36'),
+(35, 1, '2023-09-27 12:27:05'),
+(36, 1, '2023-09-27 12:27:23'),
+(37, 1, '2023-09-27 12:27:40');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Tabelstructuur voor tabel `products`
 --
 
 CREATE TABLE `products` (
@@ -61,7 +104,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `products`
+-- Gegevens worden geëxporteerd voor tabel `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `filenameimage`) VALUES
@@ -74,7 +117,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `filenameimage`) V
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabelstructuur voor tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -85,30 +128,20 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Gegevens worden geëxporteerd voor tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`) VALUES
 (1, 'Sjakie van de', 'coach@man-kind.nl', 'halt!'),
 (2, 'c c', 'corbijn.bulsink@hotmail.com', 'c'),
-(3, 'c c', 'c@adang', 'cc'),
-(4, 'caf sagdgdah', 'ag@sdagnka', 'cor'),
-(5, 'caf sagdgdah', 'ag@sdagnkas', 'cor'),
-(6, 'Hidde van Gastel', 'h.vgastel@hotmail.com', 'hoi12'),
-(7, 'Hidde van Gastel', 'h.vgastel@hotmail.coms', 'hoi12'),
-(8, 'saf daf', 'adf@fadf', 'cc'),
-(9, 'saf daf', 'adf@fadfs', 'cc'),
-(10, 'saf daf', 'adf@fadfsss', 'cc'),
-(11, 'lol bol', 'cor@eagal', 'l'),
-(12, 'c c', 'aglagkangkdalna@LOL', 'LOL'),
-(13, 'c c', 'aglagkangkdalna@LOLssss', 'LOL');
+(6, 'Hidde van Gastel', 'h.vgastel@hotmail.com', 'hoi12');
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `orderlines`
+-- Indexen voor tabel `orderlines`
 --
 ALTER TABLE `orderlines`
   ADD PRIMARY KEY (`id`),
@@ -116,68 +149,68 @@ ALTER TABLE `orderlines`
   ADD KEY `product_id` (`product_id`);
 
 --
--- Indexes for table `orders`
+-- Indexen voor tabel `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `products`
+-- Indexen voor tabel `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `orderlines`
+-- AUTO_INCREMENT voor een tabel `orderlines`
 --
 ALTER TABLE `orderlines`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT voor een tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT voor een tabel `products`
 --
 ALTER TABLE `products`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT voor een tabel `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- Constraints for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `orderlines`
+-- Beperkingen voor tabel `orderlines`
 --
 ALTER TABLE `orderlines`
-  ADD CONSTRAINT `orderlines_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `orderlines_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `orderlines_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `orders`
+-- Beperkingen voor tabel `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`id`) REFERENCES `orderlines` (`order_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
