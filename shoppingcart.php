@@ -69,4 +69,8 @@ function showEmptyShoppingCart() {
     echo '<h1>Uw winkelmandje is leeg.</h1>';
 }
 
+function showOrderSucces() {
+    echo '<h1>Bedankt voor uw bestelling! Check uw mail voor de orderinfo.</h1>';
+}
+
 ?>
