@@ -33,17 +33,21 @@ define("RESULT_WRONG_PASSWORD", -2);
  * @return array An array containing the authentication result and user information if successful.
  */
 function authenticateUser($email, $pass) {
-    $user = findUserByEmail($email);
-    
-    if(empty($user)) {
-        return ['result' => RESULT_UNKNOWN_USER];
-    }
+    try {
+        $user = findUserByEmail($email);
+        
+        if(empty($user)) {
+            return ['result' => RESULT_UNKNOWN_USER];
+        }
 
-    if ($user['pass'] !== $pass) {
-        return ['result' => RESULT_WRONG_PASSWORD];
-    }
+        if ($user['pass'] !== $pass) {
+            return ['result' => RESULT_WRONG_PASSWORD];
+        }
 
-    return ['result' => RESULT_OK, 'user' => $user];
+        return ['result' => RESULT_OK, 'user' => $user];
+    } catch (Exception $e) {
+        logError("Authenticating user failed: " . $e->getMessage()); 
+    }
 }
 
 /**
@@ -53,8 +57,12 @@ function authenticateUser($email, $pass) {
  * @return bool True if the email exists, false otherwise.
  */
 function doesEmailExist($email) {
-    $user = findUserByEmail($email);
-    return !empty($user);
+    try {
+        $user = findUserByEmail($email);
+        return !empty($user);
+    } catch (Exception $e) {
+        logError("Finding if user email exists failed: " . $e->getMessage()); 
+    }
 }
 
 /**
@@ -65,26 +73,52 @@ function doesEmailExist($email) {
  * @param string $pass The user's password.
  */
 function storeUser($email, $name, $pass) {
-    //room for future password encryption
-    saveUser($email, $name, $pass);
+    try {
+        //room for future password encryption
+        saveUser($email, $name, $pass);
+    } catch (Exception $e) {
+        logError("Saving user failed: " . $e->getMessage()); 
+    }
 }
 
 function updatePasswordByEmail($email, $newpass, $data) {
-    if (overwritePassword($email, $newpass)) {
-        $data['passwordUpdated'] = "Wachtwoord succesvol gewijzigd.";
+    try {
+        if (overwritePassword($email, $newpass)) {
+            $data['passwordUpdated'] = "Wachtwoord succesvol gewijzigd.";
+        }
+        return $data;
+    } catch (Exception $e) {
+        logError("Overwriting password failed: " . $e->getMessage());
     }
-    return $data;
 }
 
 function populateCart() {
-    $productids = array_keys($_SESSION['shoppingcart']);
-    return $cartProducts = getCartProducts($productids);
+    try {
+        $productids = array_keys($_SESSION['shoppingcart']);
+        return $cartProducts = getCartProducts($productids);
+    } catch (Exception $e) {
+        logError("Getting cart products failed: " . $e->getMessage()); 
+    }
 }
 
 function makeOrder() {
-    
-    createOrder();
-    createOrderline();
+    try {
+        $cart = $_SESSION['shoppingcart'];
+        $email = $_SESSION['useremail'];
+        $orderid = createOrder($email);
+        createOrderLineSQL($orderid, $cart);
+        return true;
+    } catch (Exception $e) {
+        logError("Checkout failed: " . $e->getMessage());
+        return false;
+    }
+}
+
+function createOrder($email) {
+    $useridArray = getUserId($email);
+    $useridString = reset($useridArray); 
+    $date = date('Y-m-d H:i:s');
+    return createOrderSQL($useridString, $date);
 }
 
 
