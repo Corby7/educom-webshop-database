@@ -13,7 +13,7 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    width: 800px;
+    width: 1600px;
 }
 
 header {
@@ -130,7 +130,58 @@ ul.products {
     justify-content: center;
 }
 
-ul.products > a.productlink {
+ul.topfiveproducts {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 20px;
+    background-color: rgb(245, 245, 245);
+    list-style-type: none;
+}
+
+ul.topfiveproducts > li.topfiveproductcard > a.productlink > ul > li {
+    height: 200px;
+}
+
+ul.topfiveproducts li.topfiveproductcard ul {
+    display: flex;
+    padding: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    list-style-type: none;
+    border-radius: 5px 20px 5px;
+}
+
+li.topfiveproductcard div.productcardbottom {
+    display: flex;
+    justify-content: space-around;
+}
+
+li.topfiveproductcard div.productcardleft {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 50%;
+}
+
+li.topfiveproductcard div.productcardleft li.ranking {
+    font-size: 25px;
+}
+
+li.topfiveproductcard div.productcardleft li.productname {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+li.topfiveproductcard div.productcardleft li.price {
+    font-size: 18px;
+    font-weight: bold;
+    font-style: unset;
+    color: red;
+    
+}
+
+a.productlink {
     text-decoration: none;
     color: black;
 }
@@ -145,7 +196,7 @@ ul.products > a.productlink > ul.productcard {
     list-style-type: none;
 }
 
-ul.products > a.productlink > ul.productcard > li > img {
+ul.products img, ul.topfiveproducts img {
     width: 220px;
     height: 200px;
 }
