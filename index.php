@@ -9,6 +9,7 @@ require('userservice.php');
 require('home.php');
 require('about.php');
 require('webshop.php');
+require('topfive.php');
 require('productpage.php');
 require('shoppingcart.php');
 require('contact.php');
@@ -149,7 +150,7 @@ function processRequest($page) {
         $data['page'] = $page;
         return $data;
 
-    } else {
+    } else { //if GET request
 
         switch($page) {
             case 'logout':
@@ -159,6 +160,10 @@ function processRequest($page) {
                 
             case 'webshop':
                 $data['products'] = getAllProducts();
+                break;
+            
+            case 'topfive':
+                $data['products'] = getTopFiveProducts();
                 break;
 
             case 'productpage':
@@ -245,6 +250,9 @@ function showTitle($data) {
             case 'webshop':
                 showWebshopTitle();
                 break;
+            case 'topfive':
+                showTopFiveTitle();
+                break; 
             case 'productpage':
                 showProductPageTitle($data);
                 break;
@@ -312,6 +320,9 @@ function showHeader($data) {
         case 'webshop':
             showWebshopHeader();
             break; 
+        case 'topfive':
+            showTopFiveHeader();
+            break; 
         case 'productpage':
             showProductPageHeader();
             break;       
@@ -358,6 +369,8 @@ function showMenu() {
     echo '|'; 
     showMenuItem("webshop", "WEBSHOP");
     echo '|'; 
+    showMenuItem("topfive", "TOP 5");
+    echo '|';
     showMenuItem("contact", "CONTACT");
     if(!isUserLoggedIn()) {
         echo '|'; 
@@ -396,6 +409,9 @@ function showContent($data) {
             break;
         case 'webshop':
             showWebshopContent($data);
+            break; 
+        case 'topfive':
+            showTopFiveContent($data);
             break; 
         case 'productpage':
             showProductPageContent($data);
