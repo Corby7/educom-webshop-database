@@ -18,6 +18,8 @@ function connectDatabase() {
 
 function overwritePassword($email, $newpass) {
     $conn = connectDatabase();
+    $email = mysqli_real_escape_string($conn, $email);
+    $newpass = mysqli_real_escape_string($conn, $newpass);
 
     try {
         $sql = "UPDATE users SET password = '$newpass' WHERE email = '$email'";
@@ -35,6 +37,9 @@ function overwritePassword($email, $newpass) {
 
 function saveUser($name, $email, $pass) {
     $conn = connectDatabase();
+    $name = mysqli_real_escape_string($conn, $name);
+    $email = mysqli_real_escape_string($conn, $email);
+    $pass = mysqli_real_escape_string($conn, $pass);
 
     try {
         $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$pass')";
@@ -50,8 +55,9 @@ function saveUser($name, $email, $pass) {
 }
 
 function findUserByEmail($email) {
-    $user = NULL;
     $conn = connectDatabase();
+    $email = mysqli_real_escape_string($conn, $email);
+    $user = NULL;
 
     try {
         $sql = "SELECT * FROM users WHERE email = '$email'";
@@ -76,6 +82,7 @@ function findUserByEmail($email) {
 
 function getUserId($email) {
     $conn = connectDatabase();
+    $email = mysqli_real_escape_string($conn, $email);
 
     try {
         $sql = "SELECT id FROM users WHERE email = '$email'";
@@ -98,6 +105,7 @@ function getUserId($email) {
 
 function getProduct($id) {
     $conn = connectDatabase();
+    $id = mysqli_real_escape_string($conn, $id);
 
     try {
         $sql = "SELECT * FROM products WHERE id = '$id'";
@@ -210,6 +218,8 @@ function getTopFiveProducts() {
 
 function createOrderSQL($id, $date) {
     $conn = connectDatabase();
+    $id = mysqli_real_escape_string($conn, $id);
+    $date = mysqli_real_escape_string($conn, $date);
 
     try {
         $sql = "INSERT INTO orders (user_id, date) VALUES ('$id', '$date')";
@@ -227,6 +237,7 @@ function createOrderSQL($id, $date) {
 
 function createOrderLineSQL($orderid, $cart) {
     $conn = connectDatabase();
+    $orderid = mysqli_real_escape_string($conn, $orderid);
 
     try {
         foreach ($cart as $productid => $amount) {
