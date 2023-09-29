@@ -13,54 +13,59 @@ function showShoppingCartHeader() {
 /** Display the content for the shoppingcart page. */
 function showShoppingCartContent($data) {
     echo '
-    <div class="shoppingcart">
-        <table>
-            <tr>
-                <th></th>
-                <th>Artikel</th>
-                <th>Prijs</th>
-                <th>Aantal</th>
-                <th>Subtotaal</th>
-            </tr>';
-
-            $total = 0;
-            foreach ($data['products'] as $product) {
-                extract($product);
-                $quantity = $_SESSION['shoppingcart'][$id];
-                $subtotal = $price * $quantity;
-                $total += $subtotal;
-                
-                echo '
+    <div class="shopping-cart">
+        <table class="table">
+            <thead>
                 <tr>
-                        <td><a href="index.php?page=productpage&productid=' . $id . '" class="productlink"><img src="images/' . $filenameimage . '"</a></td>
-                        <td><a href="index.php?page=productpage&productid=' . $id . '" class="productlink">' . $name . '</a></td>
-                    </a>
-                    <td>€' . number_format($price,2) . '</td>
-                    <td>
-                        <form method="post" action="index.php">
-                            <input type="hidden" name="id" value=' . $id . '>
-                            <input type="hidden" name="page" value="shoppingcart">
-                            <button type="submit" name="action" value="removefromcart">-</button>
-                            ' . $quantity . '
-                            <button type="submit" name="action" value="addtocart">+</button>
-                        </form>
-                    </td>
-                    <td>€' . number_format($subtotal, 2) . '</td>
-                </tr>';
-            }
-            
-            echo '
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Totaalprijs: €' . number_format($total, 2) . '</th>
-            </tr>
+                    <th></th>
+                    <th>Artikel</th>
+                    <th>Prijs</th>
+                    <th>Aantal</th>
+                    <th>Subtotaal</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+    $total = 0;
+    foreach ($data['products'] as $product) {
+        extract($product);
+        $quantity = $_SESSION['shoppingcart'][$id];
+        $subtotal = $price * $quantity;
+        $total += $subtotal;
+
+    echo '
+    <tr>
+        <td><a href="index.php?page=productpage&productid=' . $id . '"><img src="images/' . $filenameimage . '" alt="' . $name . '" style="max-width: 100px; max-height: 100px;"></a></td>
+        <td><a href="index.php?page=productpage&productid=' . $id . '">' . $name . '</a></td>
+        <td>€' . number_format($price, 2) . '</td>
+        <td>
+            <form method="post" action="index.php">
+                <input type="hidden" name="id" value=' . $id . '>
+                <input type="hidden" name="page" value="shoppingcart">
+                <button type="submit" name="action" value="removefromcart" class="btn btn-sm btn-danger">-</button>
+                ' . $quantity . '
+                <button type="submit" name="action" value="addtocart" class="btn btn-sm btn-success">+</button>
+            </form>
+        </td>
+        <td>€' . number_format($subtotal, 2) . '</td>
+    </tr>';
+}
+
+    echo '
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Totaalprijs: €' . number_format($total, 2) . '</th>
+                </tr>
+            </tfoot>
         </table>
         <form method="post" action="index.php">
             <input type="hidden" name="id" value=' . $id . '>
-            <button type="submit" name="page" value="checkout">Afrekenen</button>
+            <button type="submit" name="page" value="checkout" class="btn btn-primary">Afrekenen</button>
         </form>
     </div>';
 }

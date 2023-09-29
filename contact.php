@@ -39,70 +39,64 @@ function showContactForm($data) {
 
     echo '
     <form method="post" action="index.php">
-        <p><span class="error"><strong>* Vereist veld</strong></span></p>
-        <ul class="flex-outer">
-
-            <li>
-                <label for="gender">Aanhef:</label>
-                <select name="gender" id="gender">
+        <div class="alert alert-danger d-inline-block text-danger py-1" role="alert">* Vereist veld</div>
+        <div class="mb-3 form-outline w-50">
+            <label for="gender" class="form-label">Aanhef<span class="text-danger d-inline-block">*</span></label>
+            <select class="form-select" name="gender" id="gender">
                 <option disabled selected value> -- maak een keuze -- </option>
                 <option value="male" ' . ($gender == "male" ? "selected" : "") . '>Dhr.</option>
                 <option value="female" ' . ($gender == "female" ? "selected" : "") . '>Mvr.</option>
                 <option value="unspecified" ' . ($gender == "unspecified" ? "selected" : "") . '>Anders</option>
-                </select>
-                <span class="error">* ' . $genderErr . '</span>
-            </li>
+            </select>
+            <div class="text-danger">' . $genderErr . '</div>
+        </div>
 
-            <li>
-                <label for="fname">Voornaam:</label>
-                <input type="text" id="fname" name="fname" value="' . $fname . '">
-                <span class="error">* ' . $fnameErr . '</span>
-            </li>
-            
-            <li>
-                <label for="lname">Achternaam:</label>
-                <input type="text" id="lname" name="lname" value="' .$lname . '">
-                <span class="error">* ' . $lnameErr . '</span>
-            </li>
-            
-            <li>
-                <label for="email">E-mailadres:</label>
-                <input type="email" id="email" name="email" value="' . $email . '">
-                <span class="error">* ' . $emailErr . '</span>
-            </li>
-            
-            <li>
-                <label for="phone">Telefoonnummer:</label>
-                <input type="tel" id="phone" name="phone" value="' . $phone . '">
-                <span class="error">* ' . $phoneErr . '</span>
-            </li>
-            
-            <li>
-                <legend>Communicatievoorkeur:</legend>
-                <ul class="flex-inner">
-                    <li>
-                        <input type="radio" id="email" name="preference" value="email" ' . ($preference == "email" ? "checked" : "") . '>
-                        <label for="email">Email</label>
-                    </li>
-                    <li>
-                        <input type="radio" id="phone" name="preference" value="phone" ' . ($preference == "phone" ? "checked" : "") . '>
-                        <label for="telefoon">Telefoon</label>
-                    </li>
-                </ul>
-                <span class="error">* ' . $preferenceErr . '</span>
-            </li>
-            
-            <li>
-                <label for="bericht">Bericht:</label>
-                <textarea id="message" name="message" rows="5" cols="33">' . $message . '</textarea>
-                <span class="error">* ' . $messageErr . '</span>
-            </li>
-            
-            <li>
-                <button type="submit" name="page" value="contact">Verstuur</button>
-            </li>
-            
-        </ul>
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="text" class="form-control" placeholder="firstname" id="fname" name="fname" value="' . $fname . '">
+            <label for="fname" class="form-label"><span class="text-secondary">Voornaam</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $fnameErr . '</span>
+        </div>
+        
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="text" class="form-control" placeholder="lastname" id="lname" name="lname" value="' .$lname . '">
+            <label for="lname" class="form-label"><span class="text-secondary">Achternaam</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $lnameErr . '</span>
+        </div>
+        
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="email" class="form-control" placeholder="email" id="email" name="email" value="' . $email . '">
+            <label for="email" class="form-label"><span class="text-secondary">E-mailadres</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $emailErr . '</span>
+        </div>
+        
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="tel" class="form-control" placeholder="phone" id="phone" name="phone" value="' . $phone . '">
+            <label for="phone" class="form-label"><span class="text-secondary">Telefoonnummer</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $phoneErr . '</span>
+        </div>
+        
+        <fieldset class="mb-3 form-outline w-50">
+            <legend class="form-label">Communicatievoorkeur<span class="text-danger d-inline-block">*</span></legend>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="email" name="preference" value="email" ' . ($preference == "email" ? "checked" : "") . '>
+                <label class="form-check-label" for="email">Email</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="phonePreference" name="preference" value="phone" ' . ($preference == "phone" ? "checked" : "") . '>
+                <label class="form-check-label" for="phonePreference">Telefoon</label>
+            </div>
+            <span class="text-danger">' . $preferenceErr . '</span>
+        </fieldset>
+        
+        <div class="mb-3 form-outline w-50">
+            <label for="bericht" class="form-label">Bericht<span class="text-danger d-inline-block">*</span></label>
+            <textarea class="form-control" id="message" name="message" rows="5">' . $message . '</textarea>
+            <span class="text-danger">' . $messageErr . '</span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" name="page" value="contact">Verstuur</button>
+        
+        </div>
     </form>';
 }
 

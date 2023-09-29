@@ -12,40 +12,40 @@ function showWebshopHeader() {
 
 /** Display the content for the webshop page. */
 function showWebshopContent($data) {
-    echo '<ul class="products">';
+    echo '<div class="row row-cols-1 row-cols-md-3 g-3">';
 
     foreach ($data['products'] as $product) {
         extract($product);
         
         echo '
-        <a href="index.php?page=productpage&productid=' . $id . '" class="productlink">
-            <ul class="productcard">
-                <li>' . $id . '</li>
-                <li><img src="images/' . $filenameimage . '"></li>
-                <div class="productcardbottom">
-                    <div class="productcardleft">
-                        <li class="productname">' . $name . '</li>
-                        <li class="price">€' . $price . '</li>
+        <div class="col">
+            <a href="index.php?page=productpage&productid=' . $id . '" class="productlink">
+                <div class="card h-100">
+                <img src="images/' . $filenameimage . '" class="card-img-top" alt="' . $name . '">
+                    <div class="card-body">
+                        <h2 class="card-title">' . $name . '</h2>
+                        <span class="card-subtitle">€' . $price . '</span>
                     </div>
-                    <div class="productcardright">';
-                    if(isUserLoggedIn()) {
+                    <div class="card-footer">';
+                    if (isUserLoggedIn()) {
                         echo '
-                        <li>
+                        <div>
                             <form method="post" action="index.php">
                                 <input type="hidden" name="id" value=' . $id . '>
                                 <input type="hidden" name="action" value="addtocart">
-                                <button type="submit" name="page" value="shoppingcart">Add to cart</button>
+                                <button type="submit" name="page" value="shoppingcart" class="btn btn-primary">Add to cart</button>
                             </form>
-                        </li>';
+                        </div>';
                     }
                     echo '
                     </div>
                 </div>
-            </ul>
-        </a>';
+            </a>
+        </div>';
     }
 
-    echo '</ul>';
+    echo '</div>';
 }
+
 
 ?>

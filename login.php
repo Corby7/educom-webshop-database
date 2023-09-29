@@ -19,26 +19,24 @@ function showLoginForm($data) {
 
     echo '
     <form method="post" action="index.php">
-        <p><span class="error"><strong>* Vereist veld</strong></span></p>
-        <ul class="flex-outer">
+        <div class="alert alert-danger d-inline-block text-danger py-1" role="alert">* Vereist veld</div>
 
-            <li>
-                <label for="email">E-mailadres:</label>
-                <input type="email" id="email" name="email" value="' . $email . '">
-                <span class="error">* ' . $emailErr . $emailunknownErr . '</span>
-            </li>
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="email" class="form-control" placeholder="email" id="email" name="email" value="' . $email . '">
+            <label for="email" class="form-label"><span class="text-secondary">E-mailadres</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $emailErr . $emailunknownErr . '</span>
+        </div>
 
-            <li>
-                <label for="pass">Wachtwoord:</label>
-                <input type="password" id="pass" name="pass" value="' . $pass . '">
-                <span class="error">* ' . $passErr . $wrongpassErr . '</span>
-            </li>
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="password" class="form-control" placeholder="wachtwoord" id="pass" name="pass" value="' . $pass . '">
+            <label for="pass"class="form-label"><span class="text-secondary">Wachtwoord</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $passErr . $wrongpassErr . '</span>
+        </div>
 
-            <li>
-            <button type="submit" name="page" value="login">Verstuur</button>
-            </li>
+        <button type="submit" class="btn btn-primary" name="page" value="login">Inloggen</button>
 
-        </ul>
+
+
     </form>';
 }
 

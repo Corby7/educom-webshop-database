@@ -13,43 +13,36 @@ function showTopFiveHeader() {
 /** Display the content for the top five products page. */
 function showTopFiveContent($data) {
     $ranking = 0;
-    echo '<ul class="topfiveproducts">';
+    echo '<div class="row">';
 
     foreach ($data['products'] as $product) {
         $ranking += 1;
         extract($product);
         
         echo '
-        <li class="topfiveproductcard">
+        <div class="col-12 mb-4">
             <a href="index.php?page=productpage&productid=' . $id . '" class="productlink">
-                <ul>
-                    <li><img src="images/' . $filenameimage . '"></li>
-                    <div class="productcardbottom">
-                        <div class="productcardleft">
-                            <li class="ranking">' . $ranking . '.</li>
-                            <li class="productname">' . $name . '</li>
-                            <li class="price">€' . $price . '</li>
-                        </div>
-                        <div class="productcardright">';
-                        if(isUserLoggedIn()) {
+                <div class="card flex-md-row h-60">
+                    <img src="images/' . $filenameimage . '" class="image-fluid col-md-6" alt="' . $name . '">
+                    <div class="card-body col-md-6">
+                        <h5 class="card-title">' . $name . '</h5>
+                        <p class="card-text">€' . $price . '</p>';
+                        if (isUserLoggedIn()) {
                             echo '
-                            <li>
-                                <form method="post" action="index.php">
-                                    <input type="hidden" name="id" value=' . $id . '>
-                                    <input type="hidden" name="action" value="addtocart">
-                                    <button type="submit" name="page" value="shoppingcart">Add to cart</button>
-                                </form>
-                            </li>';
+                            <form method="post" action="index.php">
+                                <input type="hidden" name="id" value=' . $id . '>
+                                <input type="hidden" name="action" value="addtocart">
+                                <button type="submit" name="page" value="shoppingcart" class="btn btn-primary">Add to cart</button>
+                            </form>';
                         }
-                        echo '
-                        </div>
+        echo '
                     </div>
-                </ul>
+                </div>
             </a>
-        </li>';
+        </div>';
     }
 
-    echo '</ul>';
+    echo '</div>';
 }
 
 ?>
