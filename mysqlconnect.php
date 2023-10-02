@@ -126,7 +126,7 @@ function getProduct($id) {
     }
 } 
 
-function getCartProducts(array $productids) {
+function getProductsByIds(array $productids) {
     if (empty($productids)) {
         return array();
     }
@@ -144,10 +144,8 @@ function getCartProducts(array $productids) {
 
         $cartProducts = array();
 
-        if (mysqli_num_rows($result)) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $cartProducts[] = $row;
-            }
+        while ($row = mysqli_fetch_assoc($result)) {
+            $cartProducts[$row['id']] = $row; 
         }
 
         mysqli_free_result($result);
@@ -172,11 +170,8 @@ function getAllProducts() {
 
         $products = array(); //create an array to store the products
 
-        if (mysqli_num_rows($result)) {
-            //fetch all rows as associative arrays and store them in the $products array
-            while ($row = mysqli_fetch_assoc($result)) {
-                $products[] = $row;
-            }
+        while ($row = mysqli_fetch_assoc($result)) {
+            $products[] = $row;
         }
 
         //free result set
@@ -209,10 +204,8 @@ function getTopFiveProducts() {
 
         $topproducts = array();
 
-        if (mysqli_num_rows($result)) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $topproducts[] = $row;
-            }
+        while ($row = mysqli_fetch_assoc($result)) {
+            $topproducts[] = $row;
         }
 
         mysqli_free_result($result);
