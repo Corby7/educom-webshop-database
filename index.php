@@ -148,6 +148,7 @@ function processRequest($page) {
             
             case 'checkout':
                 if (makeOrder()) {
+                    $_SESSION['shoppingcart'] = array();
                     $page = 'ordersucces';
                 }
                 break;
