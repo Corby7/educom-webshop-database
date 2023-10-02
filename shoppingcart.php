@@ -12,6 +12,11 @@ function showShoppingCartHeader() {
 
 /** Display the content for the shoppingcart page. */
 function showShoppingCartContent($data) {
+    if (empty($_SESSION['shoppingcart'])) {
+        echo '<h1>Uw winkelmandje is leeg.</h1>';
+        return;
+    }
+
     echo '
     <div class="shoppingcart">
         <table>
@@ -63,10 +68,6 @@ function showShoppingCartContent($data) {
             <button type="submit" name="page" value="checkout">Afrekenen</button>
         </form>
     </div>';
-}
-
-function showEmptyShoppingCart() {
-    echo '<h1>Uw winkelmandje is leeg.</h1>';
 }
 
 function showOrderSucces() {

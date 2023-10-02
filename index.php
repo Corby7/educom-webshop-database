@@ -133,11 +133,7 @@ function processRequest($page) {
 
             case 'shoppingcart':
                 handleActions();
-                if (empty($_SESSION['shoppingcart'])) {
-                    $page = 'emptyshoppingcart';
-                } else {
-                    $data['products'] = populateCart();
-                }
+                $data['products'] = populateCart();
                 break;
             
             case 'checkout':
@@ -173,11 +169,7 @@ function processRequest($page) {
                 break;
 
             case 'shoppingcart':
-                if (empty($_SESSION['shoppingcart'])) {
-                    $page = 'emptyshoppingcart';
-                } else {
-                    $data['products'] = populateCart();
-                }
+                $data['products'] = populateCart();
                 break;
         }
 

@@ -127,6 +127,9 @@ function getProduct($id) {
 } 
 
 function getCartProducts(array $productids) {
+    if (empty($productids)) {
+        return array();
+    }
     $conn = connectDatabase();
 
     try {
