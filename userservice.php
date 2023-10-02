@@ -81,10 +81,26 @@ function updatePasswordByEmail($email, $newpass, $data) {
 
 function populateCart() {
     try {
-        $productids = array_keys($_SESSION['shoppingcart']);
-        return $cartProducts = getCartProducts($productids);
+        $cartLines = array();
+        $total = 0; 
+
+        $cart = getCart();
+        if (empty($cart)) {
+            return compact('cartLines', 'total');  
+        }
+        $productids = array_keys($cart);
+        $cartProducts = getProductsByIds($productids);
+        foreach($cart as $productid => $quantity) {
+           $product = $cartProducts[$productid];  
+           extract($product);                       
+           $subtotal = $price * $quantity; 
+           $total += $subtotal;
+           $cartLines[] = compact('id', 'filenameimage', 'name', 'price', 'quantity', 'subtotal');
+        } 
+        return compact('cartLines', 'total');  
     } catch (Exception $e) {
         logError("Getting cart products failed: " . $e->getMessage()); 
+        return array('genericErr' => 'door een technische storing kunnen wij uw winkelwagen niet laten zien');
     }
 }
 

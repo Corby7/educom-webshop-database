@@ -28,12 +28,8 @@ function showShoppingCartContent($data) {
                 <th>Subtotaal</th>
             </tr>';
 
-            $total = 0;
-            foreach ($data['products'] as $product) {
-                extract($product);
-                $quantity = $_SESSION['shoppingcart'][$id];
-                $subtotal = $price * $quantity;
-                $total += $subtotal;
+            foreach ($data['products']['cartLines'] as $cartline) {
+                extract($cartline);
                 
                 echo '
                 <tr>
@@ -60,7 +56,7 @@ function showShoppingCartContent($data) {
                 <th></th>
                 <th></th>
                 <th></th>
-                <th>Totaalprijs: €' . number_format($total, 2) . '</th>
+                <th>Totaalprijs: €' . number_format(($data['products']['total']), 2) . '</th>
             </tr>
         </table>
         <form method="post" action="index.php">
