@@ -219,43 +219,40 @@ function getTopFiveProducts() {
     }
 }
 
-function createOrderSQL($id, $date) {
+function createOrder($id, $cart) {
     $conn = connectDatabase();
     $id = mysqli_real_escape_string($conn, $id);
-    $date = mysqli_real_escape_string($conn, $date);
 
     try {
-        $sql = "INSERT INTO orders (user_id, date) VALUES ('$id', '$date')";
+        mysqli_begin_transaction($conn);// <-- Alle SQL verandering hierna zijn nog niet doorgevoerd op de database die andere mensen kunnen zien, ze zijn alleen voor jou zichtbaar
+        $sql = "INSERT INTO orders (user_id, `date`) VALUES ('$id', CURRENT_TIMESTAMP())";
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {
-            throw new Exception("Creating order failed" . $sql . "error: " . mysqli_error($conn));
+            throw new Exception("Creating order failed: " . mysqli_error($conn));
         }
 
-    } finally {
-        return mysqli_insert_id($conn);
-        //mysqli_close($conn); only close database once instead of twice?
-    }
-}
+        $orderid = mysqli_insert_id($conn);
 
-function createOrderLineSQL($orderid, $cart) {
-    $conn = connectDatabase();
-    $orderid = mysqli_real_escape_string($conn, $orderid);
-
-    try {
         foreach ($cart as $productid => $amount) {
             $sql = "INSERT INTO orderlines (order_id, product_id, amount) VALUES ('$orderid', '$productid', '$amount')";
             $result = mysqli_query($conn, $sql);
 
             if (!$result) {
-                throw new Exception("Adding orderline failed" . $sql . "error: " . mysqli_error($conn));
+                throw new Exception("Adding orderline failed: " . mysqli_error($conn));
             }
         }
 
+        if (!mysqli_commit($conn)) {// <-- Commit alle veranderingen sinds 'begin_transaction'
+            throw new Exception("Committing transaction failed");
+        }
+
+    } catch (Exception $e) {
+        mysqli_rollback($conn);// <-- draai alle veranderingen sinds 'begin_transaction' terug
+        throw $e;// <-- rethrow the exception
     } finally {
         mysqli_close($conn);
     }
 }
-
 
 ?> 

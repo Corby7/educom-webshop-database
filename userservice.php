@@ -92,21 +92,14 @@ function makeOrder() {
     try {
         $cart = $_SESSION['shoppingcart'];
         $email = $_SESSION['useremail'];
-        $orderid = createOrder($email);
-        createOrderLineSQL($orderid, $cart);
+        $useridArray = getUserId($email);
+        $useridString = reset($useridArray);
+        createOrder($useridString, $cart);
         return true;
     } catch (Exception $e) {
         logError("Checkout failed: " . $e->getMessage());
         return false;
     }
 }
-
-function createOrder($email) {
-    $useridArray = getUserId($email);
-    $useridString = reset($useridArray); 
-    $date = date('Y-m-d H:i:s');
-    return createOrderSQL($useridString, $date);
-}
-
 
 ?>
