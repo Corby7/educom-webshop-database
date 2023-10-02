@@ -265,27 +265,30 @@ function validateSettingsForm($data) {
         $repeatpassErr = "Wachtwoord herhalen is vereist";
     }
 
-    if ($pass === $newpass) {
+    if (empty($newpassErr) && ($pass === $newpass)) {
         $oldvsnewpassErr = "Nieuw wachtwoord mag niet hetzelfde zijn als uw oude wachtwoord";
     }
 
     if (empty($passErr) && empty($newpassErr) && empty($repeatpassErr) && empty($oldvsnewpassErr)) {
         $passcheckErr = validatePassword($newpass, $repeatpass);
-    }
-
-    if (empty($oldvsnewpassErr) && empty($passcheckErr)) {
-        try {
-            $email = getLoggedInUserEmail();
-            $result = authenticateUser($email, $pass);
     
-            if ($result['result'] === RESULT_WRONG_PASSWORD) {
-                $wrongpassErr = "Wachtwoord is onjuist";
-            } elseif ($result['result'] === RESULT_OK) {
-                $valid = true;
+        if (empty($passcheckErr)) {
+            try {
+                $email = getLoggedInUserEmail();
+                $result = authenticateUser($email, $pass);
+
+                switch($result['result']) {
+                    case RESULT_WRONG_PASSWORD;
+                        $wrongpassErr = "Wachtwoord is onjuist";
+                        break;
+                    case RESULT_OK;
+                        $valid = true;
+                        break;
+                }
+            } catch (Exception $e) {
+                logError("Password verify failed: " . $e->getMessage());
+                $passErr = "Sorry technisch probleem, wachtwoord kan niet worden geverifieerd";
             }
-        } catch (Exception $e) {
-            logError("Password verify failed: " . $e->getMessage());
-            $passErr = "Sorry technisch probleem, wachtwoord kan niet worden geverifieerd";
         }
     }
 
