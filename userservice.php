@@ -33,21 +33,17 @@ define("RESULT_WRONG_PASSWORD", -2);
  * @return array An array containing the authentication result and user information if successful.
  */
 function authenticateUser($email, $pass) {
-    try {
-        $user = findUserByEmail($email);
-        
-        if(empty($user)) {
-            return ['result' => RESULT_UNKNOWN_USER];
-        }
-
-        if ($user['pass'] !== $pass) {
-            return ['result' => RESULT_WRONG_PASSWORD];
-        }
-
-        return ['result' => RESULT_OK, 'user' => $user];
-    } catch (Exception $e) {
-        logError("Authenticating user failed: " . $e->getMessage()); 
+    $user = findUserByEmail($email);
+    
+    if(empty($user)) {
+        return ['result' => RESULT_UNKNOWN_USER];
     }
+
+    if ($user['pass'] !== $pass) {
+        return ['result' => RESULT_WRONG_PASSWORD];
+    }
+
+    return ['result' => RESULT_OK, 'user' => $user];
 }
 
 /**
@@ -57,12 +53,8 @@ function authenticateUser($email, $pass) {
  * @return bool True if the email exists, false otherwise.
  */
 function doesEmailExist($email) {
-    try {
-        $user = findUserByEmail($email);
-        return !empty($user);
-    } catch (Exception $e) {
-        logError("Finding if user email exists failed: " . $e->getMessage()); 
-    }
+    $user = findUserByEmail($email);
+    return !empty($user);
 }
 
 /**
@@ -73,12 +65,7 @@ function doesEmailExist($email) {
  * @param string $pass The user's password.
  */
 function storeUser($email, $name, $pass) {
-    try {
-        //room for future password encryption
-        saveUser($email, $name, $pass);
-    } catch (Exception $e) {
-        logError("Saving user failed: " . $e->getMessage()); 
-    }
+    saveUser($email, $name, $pass);
 }
 
 function updatePasswordByEmail($email, $newpass, $data) {

@@ -107,8 +107,13 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
+                    try {
                     storeUser($name, $email, $pass);
                     $page = "login";
+                    } catch (Exception $e) {
+                        logError("Store user failed: " . $e->getMessage());
+                        $passcheckErr = "Sorry technisch probleem, gegevens opslaan niet mogelijk";
+                    }
                 }
                 break;
 
@@ -117,7 +122,12 @@ function processRequest($page) {
                 if ($data['valid']) {
                     extract($data);
 
-                    $data = updatePasswordByEmail($email, $newpass, $data);
+                    try {
+                        $data = updatePasswordByEmail($email, $newpass, $data);
+                    } catch (Exception $e) {
+                        logError("Update password failed: " . $e->getMessage());
+                        $passcheckErr= "Wachtwoord bijwerken niet mogelijk";
+                    }
                 }
                 break;
 
@@ -155,17 +165,29 @@ function processRequest($page) {
                 break;
                 
             case 'webshop':
-                $data['products'] = getAllProducts();
+                try {
+                    $data['products'] = getAllProducts();
+                } catch (Exception $e) {
+                    logError("Get all products failed: " . $e->getMessage());
+                }
                 break;
             
             case 'topfive':
-                $data['products'] = getTopFiveProducts();
+                try {
+                    $data['products'] = getTopFiveProducts();
+                } catch (Exception $e) {
+                    logError("Get top five products failed: " . $e->getMessage());
+                }
                 break;
 
             case 'productpage':
                 $productid = getUrlVar("productid");
-                $data['product'] = getProduct($productid);
-                $page = "productpage";
+                try {
+                    $data['product'] = getProduct($productid);
+                    $page = "productpage";
+                } catch (Exception $e) {
+                    logError("Get product by id failed: " . $e->getMessage());
+                }
                 break;
 
             case 'shoppingcart':
