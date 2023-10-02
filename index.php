@@ -306,6 +306,7 @@ function showBodySection($data) {
     echo '  <div class="container">' . PHP_EOL; 
     showHeader($data); 
     showMenu(); 
+    if (isset($data['genericErr'])) { echo '<span class="error">' . $data['genericErr'] . '</span>'; }
     showContent($data); 
     showFooter(); 
     echo '  </div>' . PHP_EOL;         
