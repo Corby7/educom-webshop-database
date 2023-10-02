@@ -44,6 +44,14 @@ function logoutUser() {
     session_destroy(); 
 }
 
+function getCart() {
+    if (isset($_SESSION['shoppingcart'])) {
+        return $_SESSION['shoppingcart'];
+    } else {
+        return array();
+    }
+}
+
 function addToCart($productId) {
     if (array_key_exists($productId, $_SESSION['shoppingcart'])) {
         $_SESSION['shoppingcart'][$productId] += 1;
