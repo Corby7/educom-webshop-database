@@ -172,9 +172,13 @@ function validateRegisterForm($data) {
     if (empty($email)) {
         $emailErr = "Email is vereist";
     }
-
-    if (!empty($email) && doesEmailExist($email)) {
-        $emailknownErr = "E-mailadres is reeds bekend";
+    
+    try {
+        if (!empty($email) && doesEmailExist($email)) {
+            $emailknownErr = "E-mailadres is reeds bekend";
+        }
+    } catch (Exception $e) {
+        logError("Check if email exists failed: " . $e->getMessage());
     }
 
     $pass = testInput(getPostVar("pass"));
@@ -281,7 +285,7 @@ function validateSettingsForm($data) {
             }
         } catch (Exception $e) {
             logError("Password verify failed: " . $e->getMessage());
-            $passErr = "Sorry technisch probleem, wachtwoord kan niet worden";
+            $passErr = "Sorry technisch probleem, wachtwoord kan niet worden geverifieerd";
         }
     }
 
