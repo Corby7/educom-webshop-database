@@ -174,6 +174,7 @@ function validateRegisterForm($data) {
     }
     
     try {
+        require_once('userservice.php');
         if (!empty($email) && doesEmailExist($email)) {
             $emailknownErr = "E-mailadres is reeds bekend";
         }
@@ -227,6 +228,7 @@ function validateLoginForm($data) {
 
     if (empty($emailErr) && empty($passErr)) {
         try {
+            require_once('userservice.php');
             $result = authenticateUser($email, $pass);
 
             if ($result['result'] === RESULT_UNKNOWN_USER) {
@@ -274,6 +276,7 @@ function validateSettingsForm($data) {
     
         if (empty($passcheckErr)) {
             try {
+                require_once('userservice.php');
                 $email = getLoggedInUserEmail();
                 $result = authenticateUser($email, $pass);
 

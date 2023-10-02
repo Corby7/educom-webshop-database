@@ -3,20 +3,6 @@
 session_start(); 
 
 require('sessionmanager.php');
-require('validations.php');
-require('userservice.php');
-
-require('home.php');
-require('about.php');
-require('webshop.php');
-require('topfive.php');
-require('productpage.php');
-require('shoppingcart.php');
-require('contact.php');
-require('register.php');
-require('login.php');
-require('settings.php');
-require('error.php');
 
 function logError($message) {
     echo "LOG TO FILE: " . $message;
@@ -90,6 +76,7 @@ function getUrlVar($key, $default = '') {
  * @return array An array containing input data for the response page.
  */
 function processRequest($page) {
+    require_once('validations.php');
     $data = initializeFormData($page);
     
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -142,11 +129,13 @@ function processRequest($page) {
                 break;
 
             case 'shoppingcart':
+                require_once('userservice.php');
                 handleActions();
                 $data['products'] = populateCart();
                 break;
             
             case 'checkout':
+                require_once('userservice.php');
                 if (makeOrder()) {
                     $_SESSION['shoppingcart'] = array();
                     $page = 'ordersucces';
@@ -167,6 +156,7 @@ function processRequest($page) {
                 
             case 'webshop':
                 try {
+                    require_once('userservice.php');
                     $data['products'] = getAllProducts();
                 } catch (Exception $e) {
                     logError("Get all products failed: " . $e->getMessage());
@@ -175,6 +165,7 @@ function processRequest($page) {
             
             case 'topfive':
                 try {
+                    require_once('userservice.php');
                     $data['products'] = getTopFiveProducts();
                 } catch (Exception $e) {
                     logError("Get top five products failed: " . $e->getMessage());
@@ -184,6 +175,7 @@ function processRequest($page) {
             case 'productpage':
                 $productid = getUrlVar("productid");
                 try {
+                    require_once('userservice.php');
                     $data['product'] = getProduct($productid);
                     $page = "productpage";
                 } catch (Exception $e) {
@@ -192,6 +184,7 @@ function processRequest($page) {
                 break;
 
             case 'shoppingcart':
+                require_once('userservice.php');
                 $data['products'] = populateCart();
                 break;
         }
@@ -257,39 +250,49 @@ function showTitle($data) {
     echo '<title>';
         switch ($data['page']) {
             case 'home':
+                require_once('home.php');
                 showHomeTitle();
                 break;
             case 'about':
+                require_once('about.php');
                 showAboutTitle();
                 break;
             case 'webshop':
+                require_once('webshop.php');
                 showWebshopTitle();
                 break;
             case 'topfive':
+                require_once('topfive.php');
                 showTopFiveTitle();
                 break; 
             case 'productpage':
+                require_once('productpage.php');
                 showProductPageTitle($data);
                 break;
             case 'shoppingcart':
-            case 'emptyshoppingcart':
             case 'ordersucces':
+                require_once('shoppingcart.php');
                 showShoppingCartTitle();
                 break;          
             case 'contact':
             case 'thanks':
+                require_once('contact.php');
                 showContactTitle();
                 break;
             case 'register':
+                require_once('register.php');
                 showRegisterTitle();
                 break;
             case 'login':
+                require_once('login.php');
                 showLoginTitle();
                 break;
             case 'settings':
+                require_once('settings.php');
                 showSettingsTitle();
                 break;        
             default:
+                require_once('error.php');
                 showErrorTitle();
                 break;
         }
@@ -343,7 +346,6 @@ function showHeader($data) {
             showProductPageHeader();
             break;       
         case 'shoppingcart':
-        case 'emptyshoppingcart':
         case 'ordersucces':
             showShoppingCartHeader();
             break;  
