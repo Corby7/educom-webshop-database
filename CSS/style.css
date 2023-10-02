@@ -1,3 +1,7 @@
+* {
+    font-family: 'Lato', sans-serif;
+}
+
 .white-svg {
     filter: invert(1); /* Inverts the colors to make it white */
 }
@@ -12,3 +16,20 @@
     border-radius: 50px 50px 0px 50px;
 }
 
+.bi-person-circle, .bi-bag-check {
+    font-size: 24px;
+    color: white;
+}
+
+.bi-linkedin, .bi-github {
+    font-size: 24px;
+    color: red;
+}
+
+.bi-person-circle:hover, .bi-bag-check:hover {
+    color: red;
+}
+
+body > div.content {
+    height: 100vh;
+}
