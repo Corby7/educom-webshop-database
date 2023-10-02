@@ -193,9 +193,14 @@ function getTopFiveProducts() {
     $conn = connectDatabase();
 
     try {
-        $sql = "SELECT orderlines.product_id, SUM(orderlines.amount), orders.date, products.id, products.name, products.price, products.filenameimage FROM orderlines
-        LEFT JOIN orders ON orderlines.order_id = orders.id LEFT JOIN products ON orderlines.product_id = products.id
-        WHERE orders.date BETWEEN DATE_SUB(NOW(), INTERVAL 1 WEEK) AND NOW() GROUP BY orderlines.product_id ORDER BY SUM(orderlines.amount) DESC LIMIT 5";
+        $sql = "SELECT orderlines.product_id, SUM(orderlines.amount), orders.date, products.id, products.name, products.price, products.filenameimage 
+        FROM orderlines
+        LEFT JOIN orders ON orderlines.order_id = orders.id 
+        LEFT JOIN products ON orderlines.product_id = products.id
+        WHERE orders.date > DATE_SUB(NOW(), INTERVAL 1 WEEK)
+        GROUP BY orderlines.product_id 
+        ORDER BY SUM(orderlines.amount) 
+        DESC LIMIT 5";
         $result = mysqli_query($conn, $sql);
 
         if (!$result) {
