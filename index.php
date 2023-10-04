@@ -391,7 +391,7 @@ function showMenu() {
                         </button>
                         <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                             <li>
-                                <a class="dropdown-item av-link link-body-emphasis px-3 active text-black bg-white fw-bold" href="index.php?page=settings">Change Password</a>
+                                <a class="dropdown-item av-link link-body-emphasis px-3 active text-black bg-white fw-bold" href="index.php?page=settings">Wachtwoord wijzigen</a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>

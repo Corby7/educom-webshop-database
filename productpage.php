@@ -25,7 +25,7 @@ function showProductPageContent($data) {
             <div class="product-card product-info">
                 <div class="card-body">
                     <h2 class="card-title product-name">' . $name . '</h2>
-                    <p class="card-text price">€' . $price . '</p>
+                    <p class="card-text price h5">€' . $price . '</p>
                     <p class="card-text description">' . $description . '</p>';
                     if(isUserLoggedIn()) {
                         echo '
