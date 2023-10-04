@@ -7,7 +7,7 @@ function showHomeTitle() {
 
 /** Display the header for the home page. */
 function showHomeHeader() {
-    echo 'Welkom op Mijn Website';
+    echo 'Welkom op Mijn Website.';
 }
 
 /** Display the content for the home page. */

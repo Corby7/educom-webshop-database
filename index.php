@@ -293,10 +293,12 @@ function showTitle($data) {
  */
 function showBodySection($data) { 
     echo '<body>' . PHP_EOL;
-    echo '  <div class="wrapper d-flex flex-column min-vh-100">' . PHP_EOL; 
-    showMenu(); 
-    showHeader($data); 
-    showContent($data); 
+    echo '  <div class="wrapper d-flex flex-column justify-content-between min-vh-100 ">' . PHP_EOL; 
+    showMenu();
+    echo '<div class="container d-flex flex-column flex-grow-1">'; 
+        showHeader($data); 
+        showContent($data); 
+    echo '</div>';
     showFooter(); 
     echo '  </div>' . PHP_EOL;
     echo '  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>' . PHP_EOL;         
@@ -315,7 +317,7 @@ function endDocument() {
  */
 function showHeader($data) {
     echo '<header class="py-3">' . PHP_EOL;
-    echo '  <div class="container h1 px-5">';
+    echo '  <div class="container h1 px-5 ">';
     switch ($data['page']) {
         case 'home':
             showHomeHeader();
@@ -358,11 +360,17 @@ function showHeader($data) {
     echo '</header>' . PHP_EOL;
 }
 
+function GetIconMarkup($name, $class) {
+    $svgContent = file_get_contents("Images/$name.svg");
+    $svgContent = str_replace('<svg', '<svg class=' . $class . '', $svgContent); // Add class="icon" to the <svg> element
+    return $svgContent;
+}
+
 /** Display the menu section of the HTML document. */
 function showMenu() { 
-    echo '<nav class="navbar navbar-expand bg-primary py-2 d-flex justify-content-between">
-        <div class"nav-left">  
-            <a href="#" class="navbar-brand mx-2">Brand</a>
+    echo '<nav class="navbar navbar-expand py-2 d-flex justify-content-between">
+        <div class="nav-left">  
+            <a href="#" class="navbar-brand mx-2">' . GetIconMarkup('logo', 'icontop') . '</a>
         </div>
         <div class"nav-center">
             <ul class="navbar-nav h6">';
@@ -377,16 +385,17 @@ function showMenu() {
             <ul class="navbar-nav h7">';
                 if(isUserLoggedIn()) {
                     echo '
-                    <div class="dropdown">
-                        <a class="nav-link px-4" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i>
-                        </a>
-                        <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                    <div class="nav-item dropstart">
+                        <button class="nav-link pe-4" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle pl-0"></i>
+                        </button>
+                        <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
                             <li>
-                                <a class="dropdown-item av-link link-body-emphasis px-3 active text-white bg-dark" href="index.php?page=settings">Change Password</a>
+                                <a class="dropdown-item av-link link-body-emphasis px-3 active text-black bg-white fw-bold" href="index.php?page=settings">Change Password</a>
                             </li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item av-link link-body-emphasis px-3 active text-white bg-dark" href="index.php?page=logout">Logout: ' . getLoggedInUserName() . '</a>
+                                <a class="dropdown-item av-link link-body-emphasis px-3 active text-black bg-white fw-bold" href="index.php?page=logout">Logout: ' . getLoggedInUserName() . '</a>
                             </li>
                         </ul>
                     </div>
@@ -394,7 +403,6 @@ function showMenu() {
                     <a class="nav-link px-4" href="index.php?page=shoppingcart" role="button" id="shoppingcart">
                         <i class="bi bi-bag-check"></i>
                     </a>';
-                    //showMenuItem("shoppingcart", "Shopping Cart");
                 }
                 if(!isUserLoggedIn()) {
                     showMenuItem("register", "Register"); 
@@ -474,15 +482,13 @@ function showFooter() {
     echo'
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <p>Brand.</p>
-                </a>
-                <span class="mb-3 mb-md-0 text-body-secondary font-italic">&copy; 2023 Jules Corbijn Bulsink</span>
+            <div class="col-md-4 mx-2 d-flex align-items-center">
+                <a class="text-body-secondary" href="#" class="navbar-brand mx-2">' . GetIconMarkup('logo', 'iconbot') . '</a>
+                <span class="mb-3 mb-md-0 text-body-secondary fst-italic">&copy; 2023 Jules Corbijn Bulsink</span>
             </div>
     
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-body-secondary" href="https://linkedin.com/in/jules-corbijn-bulsink"><i class="bi bi-linkedin"></i></a></li>
+            <ul class="nav col-md-4 mx-2 justify-content-end list-unstyled d-flex">
+                <li class="ms-3 mx-2"><a class="text-body-secondary" href="https://linkedin.com/in/jules-corbijn-bulsink"><i class="bi bi-linkedin"></i></a></li>
                 <li class="ms-3"><a class="text-body-secondary" href="https://github.com/Corby7"><i class="bi bi-github"></i></a></li>
             </ul>
         </footer>

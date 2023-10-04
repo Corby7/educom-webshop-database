@@ -29,11 +29,11 @@ function showLoginForm($data) {
 
         <div class="form-floating mb-3 form-outline w-50">
             <input type="password" class="form-control" placeholder="wachtwoord" id="pass" name="pass" value="' . $pass . '">
-            <label for="pass"class="form-label"><span class="text-secondary">Wachtwoord</span><span class="text-danger d-inline-block">*</span></label>
+            <label for="pass" class="form-label"><span class="text-secondary">Wachtwoord</span><span class="text-danger d-inline-block">*</span></label>
             <span class="text-danger">' . $passErr . $wrongpassErr . '</span>
         </div>
 
-        <button type="submit" class="btn btn-primary" name="page" value="login">Inloggen</button>
+        <button type="submit" class="btn btn-primary" id="button-invert" name="page" value="login">Inloggen</button>
 
 
 

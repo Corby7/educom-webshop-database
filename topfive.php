@@ -21,21 +21,27 @@ function showTopFiveContent($data) {
         
         echo '
         <div class="col-12 mb-4">
-            <a href="index.php?page=productpage&productid=' . $id . '" class="productlink">
+            <a href="index.php?page=productpage&productid=' . $id . '" class="productlink text-decoration-none">
                 <div class="card flex-md-row h-60">
-                    <img src="images/' . $filenameimage . '" class="image-fluid col-md-6" alt="' . $name . '">
-                    <div class="card-body col-md-6">
-                        <h5 class="card-title">' . $name . '</h5>
-                        <p class="card-text">€' . $price . '</p>';
-                        if (isUserLoggedIn()) {
-                            echo '
-                            <form method="post" action="index.php">
-                                <input type="hidden" name="id" value=' . $id . '>
-                                <input type="hidden" name="action" value="addtocart">
-                                <button type="submit" name="page" value="shoppingcart" class="btn btn-primary">Add to cart</button>
-                            </form>';
-                        }
-        echo '
+                    <img src="images/' . $filenameimage . '" class="top5product-img" alt="' . $name . '">
+                    <div class="card-body col-md-6 d-flex gap-5">
+                        <span class="card-title h2">' . $ranking . '.</span>
+                        <div class="d-flex flex-column justify-content-evenly">
+                            <span class="card-title h2">' . $name . '</span>
+                            <p class="card-text h4">€' . $price . '</p>';
+                            if (isUserLoggedIn()) {
+                                echo '
+                                <form method="post" action="index.php">
+                                    <input type="hidden" name="id" value=' . $id . '>
+                                    <input type="hidden" name="action" value="addtocart">
+                                    <button type="submit" name="page" value="shoppingcart" class="btn btn-primary d-flex gap-2 pxy-2" id="button-invert">
+                                        <i class="bi bi-bag-plus"></i>
+                                        <span class="btn-text">Add to cart</span>
+                                    </button>
+                                </form>';
+                            }
+            echo '      </div>
+        
                     </div>
                 </div>
             </a>

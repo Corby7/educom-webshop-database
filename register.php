@@ -52,7 +52,7 @@ function showRegisterForm($data) {
             <span class="text-danger">' . $repeatpassErr . $passcheckErr . '</span>
         </div>
 
-        <button type="submit" class="btn btn-primary" name="page" value="register">Registreren</button>
+        <button type="submit" class="btn btn-primary" id="button-invert" name="page" value="register">Registreren</button>
 
     </form>';
 }

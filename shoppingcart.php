@@ -14,7 +14,7 @@ function showShoppingCartHeader() {
 function showShoppingCartContent($data) {
     echo '
     <div class="shopping-cart">
-        <table class="table">
+        <table class="table table-striped table-hover align-middle">
             <thead>
                 <tr>
                     <th></th>
@@ -24,7 +24,7 @@ function showShoppingCartContent($data) {
                     <th>Subtotaal</th>
                 </tr>
             </thead>
-            <tbody>';
+            <tbody class="table-group-divider">';
 
     $total = 0;
     foreach ($data['products'] as $product) {
@@ -35,7 +35,7 @@ function showShoppingCartContent($data) {
 
     echo '
     <tr>
-        <td><a href="index.php?page=productpage&productid=' . $id . '"><img src="images/' . $filenameimage . '" alt="' . $name . '" style="max-width: 100px; max-height: 100px;"></a></td>
+        <td><a href="index.php?page=productpage&productid=' . $id . '"><img src="images/' . $filenameimage . '" alt="' . $name . '" class="shoppingcart-img"></a></td>
         <td><a href="index.php?page=productpage&productid=' . $id . '">' . $name . '</a></td>
         <td>€' . number_format($price, 2) . '</td>
         <td>
@@ -63,19 +63,19 @@ function showShoppingCartContent($data) {
                 </tr>
             </tfoot>
         </table>
-        <form method="post" action="index.php">
+        <form method="post" action="index.php" class="d-flex justify-content-end me-5">
             <input type="hidden" name="id" value=' . $id . '>
-            <button type="submit" name="page" value="checkout" class="btn btn-primary">Afrekenen</button>
+            <button type="submit" name="page" value="checkout" class="btn btn-primary" id="button-invert">Afrekenen</button>
         </form>
     </div>';
 }
 
 function showEmptyShoppingCart() {
-    echo '<h1>Uw winkelmandje is leeg.</h1>';
+    echo '<h3>Uw winkelmandje is leeg.</h3>';
 }
 
 function showOrderSucces() {
-    echo '<h1>Bedankt voor uw bestelling! Check uw mail voor de orderinfo.</h1>';
+    echo '<h3>Bedankt voor uw bestelling! Check uw mail voor de orderinfo.</h3>';
 }
 
 ?>

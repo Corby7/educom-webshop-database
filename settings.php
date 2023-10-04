@@ -19,36 +19,29 @@ function showSettingsForm($data) {
 
     echo '
     <form method="post" action="index.php">
-        <p><span class="error"><strong>* Vereist veld</strong></span></p>
-        <ul class="flex-outer">
+        <div class="alert alert-danger d-inline-block text-danger py-1" role="alert">* Vereist veld</div>
 
-            <li>
-                <label for="pass">Oud wachtwoord:</label>
-                <input type="password" id="pass" name="pass" value="' . $pass . '">
-                <span class="error">* ' . $passErr . $wrongpassErr . '</span>
-            </li>
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="password" class="form-control" placeholder="oud wachtwoord" id="pass" name="pass" value="' . $pass . '">
+            <label for="pass" class="form-label"><span class="text-secondary">Oud wachtwoord</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $passErr . $wrongpassErr . '</span>
+        </div>
 
-            <li>
-                <label for="pass">Nieuw wachtwoord:</label>
-                <input type="password" id="newpass" name="newpass" value="' . $newpass . '">
-                <span class="error">* ' . $newpassErr . $oldvsnewpassErr . '</span>
-            </li>
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="password" class="form-control" placeholder="nieuw wachtwoord" id="newpass" name="newpass" value="' . $newpass . '">
+            <label for="pass" class="form-label"><span class="text-secondary">Nieuw wachtwoord</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $newpassErr . $oldvsnewpassErr . '</span>
+        </div>
 
-            <li>
-                <label for="repeatpass">Herhaal nieuw wachtwoord:</label>
-                <input type="password" id="repeatpass" name="repeatpass" value="' . $repeatpass . '">
-                <span class="error">* ' . $repeatpassErr . $passcheckErr . '</span>
-            </li>
+        <div class="form-floating mb-3 form-outline w-50">
+            <input type="password" class="form-control" placeholder="herhaal nieuw wachtwoord" id="repeatpass" name="repeatpass" value="' . $repeatpass . '">
+            <label for="repeatpass" class="form-label"><span class="text-secondary">Herhaal nieuw wachtwoord</span><span class="text-danger d-inline-block">*</span></label>
+            <span class="text-danger">' . $repeatpassErr . $passcheckErr . '</span>
+        </div>
 
-            <li>
-                <span class="success">' . $passwordUpdated . '</span>
-            </li>
+        <button type="submit" class="btn btn-primary" id="button-invert" name="page" value="settings">Wijzigen</button>
 
-            <li>
-                <button type="submit" name="page" value="settings">Verstuur</button>
-            </li>
-
-        </ul>
+        <span class="text-success mx-2">' . $passwordUpdated . '</span>
     </form>';
 }
 

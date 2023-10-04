@@ -41,7 +41,7 @@ function showContactForm($data) {
     <form method="post" action="index.php">
         <div class="alert alert-danger d-inline-block text-danger py-1" role="alert">* Vereist veld</div>
         <div class="mb-3 form-outline w-50">
-            <label for="gender" class="form-label">Aanhef<span class="text-danger d-inline-block">*</span></label>
+            <label for="gender" class="form-label fs-5">Aanhef<span class="text-danger d-inline-block">*</span></label>
             <select class="form-select" name="gender" id="gender">
                 <option disabled selected value> -- maak een keuze -- </option>
                 <option value="male" ' . ($gender == "male" ? "selected" : "") . '>Dhr.</option>
@@ -76,10 +76,10 @@ function showContactForm($data) {
         </div>
         
         <fieldset class="mb-3 form-outline w-50">
-            <legend class="form-label">Communicatievoorkeur<span class="text-danger d-inline-block">*</span></legend>
+            <legend class="form-label fs-5">Communicatievoorkeur<span class="text-danger d-inline-block">*</span></legend>
             <div class="form-check">
-                <input class="form-check-input" type="radio" id="email" name="preference" value="email" ' . ($preference == "email" ? "checked" : "") . '>
-                <label class="form-check-label" for="email">Email</label>
+                <input class="form-check-input" type="radio" id="emailradio" name="preference" value="email" ' . ($preference == "email" ? "checked" : "") . '>
+                <label class="form-check-label" for="emailradio">Email</label>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="radio" id="phonePreference" name="preference" value="phone" ' . ($preference == "phone" ? "checked" : "") . '>
@@ -89,12 +89,12 @@ function showContactForm($data) {
         </fieldset>
         
         <div class="mb-3 form-outline w-50">
-            <label for="bericht" class="form-label">Bericht<span class="text-danger d-inline-block">*</span></label>
+            <label for="bericht" class="form-label fs-5">Bericht<span class="text-danger d-inline-block">*</span></label>
             <textarea class="form-control" id="message" name="message" rows="5">' . $message . '</textarea>
             <span class="text-danger">' . $messageErr . '</span>
         </div>
         
-        <button type="submit" class="btn btn-primary" name="page" value="contact">Verstuur</button>
+        <button type="submit" class="btn btn-primary" id="button-invert" name="page" value="contact">Verstuur</button>
         
         </div>
     </form>';
