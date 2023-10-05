@@ -12,7 +12,7 @@ function showWebshopHeader() {
 
 /** Display the content for the webshop page. */
 function showWebshopContent($data) {
-    echo '<div class="row row-cols-1 row-cols-md-3 g-3">';
+    echo '<div class="row row-cols-md-2 row-cols-xl-3 g-3">';
 
     foreach ($data['products'] as $product) {
         extract($product);
@@ -20,9 +20,9 @@ function showWebshopContent($data) {
         echo '
         <div class="col">
             <a href="index.php?page=productpage&productid=' . $id . '" class="productlink text-decoration-none">
-                <div class="card h-100">
-                <img src="images/' . $filenameimage . '" class="card-img-top" alt="' . $name . '">
-                    <div class="card-body d-flex justify-content-between align-items-center">
+                <div class="card">
+                    <img src="images/' . $filenameimage . '"  class="img-fluid" style="width: 400px" alt="profile picture" alt="' . $name . '">
+                    <div class="card-body d-flex flex-wrap g-4 justify-content-between align-items-center">
                         <div class="d-flex flex-column">
                             <span class="card-title h2">' . $name . '</span>
                             <span class="card-subtitle">€' . $price . '</span>
