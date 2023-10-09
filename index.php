@@ -130,17 +130,12 @@ function processRequest($page) {
 
             case 'shoppingcart':
                 require_once('userservice.php');
-                handleActions();
+                if (handleActions()) {
+                    $page = 'ordersucces';
+                }
                 $data['products'] = populateCart();
                 break;
             
-            case 'checkout':
-                require_once('userservice.php');
-                if (makeOrder()) {
-                    $_SESSION['shoppingcart'] = array();
-                    $page = 'ordersucces';
-                }
-                break;
         }
 
         $data['page'] = $page;
@@ -206,6 +201,13 @@ function handleActions() {
         case "removefromcart":
             $productid = getPostVar("id");
             removeFromCart($productid);
+            break;
+        case 'checkout':
+            require_once('userservice.php');
+            if (makeOrder()) {
+                $_SESSION['shoppingcart'] = array();
+                return true;
+            }
             break;
     }
 }   

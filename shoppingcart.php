@@ -61,7 +61,8 @@ function showShoppingCartContent($data) {
         </table>
         <form method="post" action="index.php">
             <input type="hidden" name="id" value=' . $id . '>
-            <button type="submit" name="page" value="checkout">Afrekenen</button>
+            <input type="hidden" name="page" value="shoppingcart">
+            <button type="submit" name="action" value="checkout">Afrekenen</button>
         </form>
     </div>';
 }
