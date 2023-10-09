@@ -36,8 +36,8 @@ function showTopFiveContent($data) {
                             <li>
                                 <form method="post" action="index.php">
                                     <input type="hidden" name="id" value=' . $id . '>
-                                    <input type="hidden" name="action" value="addtocart">
-                                    <button type="submit" name="page" value="shoppingcart">Add to cart</button>
+                                    <input type="hidden" name="page" value="shoppingcart">
+                                    <button type="submit" name="action" value="addtocart">Add to cart</button>
                                 </form>
                             </li>';
                         }
